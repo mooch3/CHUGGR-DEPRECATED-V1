@@ -1,0 +1,28 @@
+<%- include('partials/header'); -%>
+<h1>My Bets</h1>
+  <% docs.forEach(item => { %>
+    <div>
+    <table class="bet-card">
+    <tr>
+      <td style="border-radius: 15px 0 0 0"><strong><%= item.data().title%></strong> </td>
+      <td><%=item.data().type%></td>
+      <td style="border-radius: 0 15px 0 0"><%=item.data().stake.beers%>🍺 <%= item.data().stake.shots%>🥃</td>
+    </tr>
+    <tr>
+      <td class="participant"><%=item.data().team1 + ": "%> <i><%=Object.values(item.data().side1Users)%></i> </td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="participant" style="border-radius: 0 0 0 15px"><%=item.data().team2 + ": "%> <i><%=Object.values(item.data().side2Users)%></i></td>
+      <td class="isFinished"><%=item.data().isFinished%></td>
+      <td style="border-radius: 0 0 15px 0"><a href="/bets/<%=item.data().betID%>" style="color: blue">Details > </a></td>
+    </tr>
+  </table>
+
+  </div>
+<%});%>
+
+<script src="scripts/DashboardCleanUp.js"> </script>
+
+<%-include('partials/footer'); -%>

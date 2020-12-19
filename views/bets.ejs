@@ -1,0 +1,59 @@
+<%- include('partials/header') -%>
+
+
+<div class="bet">
+  <h1>Bet Page</h1>
+</div>
+  <div>
+  <table class="bet-card">
+  <tr>
+    <td style="border-radius: 15px 0 0 0"><strong><%= bet.title%></strong> </td>
+    <td><%=bet.type%></td>
+    <td style="border-radius: 0 15px 0 0"><%=bet.stake.beers%>🍺 <%= bet.stake.shots%>🥃</td>
+  </tr>
+  <tr>
+    <td class="participant"><%=bet.team1 + ": "%> <i><%=Object.values(bet.side1Users)%></i> </td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="participant" style="border-radius: 0 0 0 15px"><%=bet.team2 + ": "%> <i><%=Object.values(bet.side2Users)%></i></td>
+    <td class="isFinished"><%=bet.isFinished%></td>
+    <td style="border-radius: 0 0 15px 0"></td>
+  </tr>
+</table>
+
+</div>
+
+
+
+
+  <div class="chatbox group-chat">
+    <div class="chatbox-top">
+      <div class="chatbox-avatar">
+        <img src="/images/CHUGGRLogo.png" alt="">
+      </div>
+
+      <div class="chat-group-name">
+        <!-- bet name -->
+      </div>
+      <div class="chatbox-icons">
+      </div>
+      <div class="chat-input-holder">
+        <textarea class="chat-input"></textarea>
+        <input type="submit" value="Send" class="message-send" />
+      </div>
+    </div>
+
+</div>
+<script src="/scripts/chat.js"></script>
+<script src="/scripts/DashboardCleanUp.js"></script>
+
+
+
+
+
+
+
+
+<%- include('partials/footer') -%>

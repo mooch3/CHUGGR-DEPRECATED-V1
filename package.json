@@ -1,0 +1,24 @@
+{
+  "name": "chuggr",
+  "version": "1.0.0",
+  "description": "This is my most recent attempt at getting the front and backend working.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Bet",
+    "Beer",
+    "CHUGGR"
+  ],
+  "author": "Derek Smith",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "firebase": "^7.23.0",
+    "firebase-admin": "^9.3.0",
+    "lodash": "^4.17.20"
+  }
+}

@@ -1,0 +1,20 @@
+<%- include('partials/header'); -%>
+<h3>Find Friends to Follow</h3>
+<div id="friendSuccess" class="hidden-div"><p>You followed a new chuggr!</p></div>
+<div id="friendFail" class="hidden-div"> <p>You are already chuggin' with this person.</p></div>
+<div id="noResult" class="hidden-div"> <p>We couldn't find this chuggr.</p></div>
+
+<form autocomplete="off" action="/friends" method="post" id="friendForm">
+  <div class="autocomplete" style="width:300px;">
+    <input id="findFriends" type="text" name="findFriends" placeholder="Find a Friend to Follow">
+  </div>
+  <button type="button" name="button" class="btn-lg btn-primary" id="addFriend">Add</button>
+  <input type="hidden" name="me" value=<%=currentUser%>>
+</form>
+
+<h1>Friends List</h1>
+<script src="scripts/friends.js">
+
+</script>
+
+<%-include('partials/footer'); -%>

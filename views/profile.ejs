@@ -1,0 +1,33 @@
+<%- include('partials/header'); -%>
+
+<% currentUserProfile.forEach(doc => { %>
+
+<div class="">
+
+
+<table class="profile-data">
+  <tr>
+    <th>
+      <img id="placeholder" src="images/CHUGGRLogo.png" alt="">
+    </th>
+    <th>
+       <%=doc.data().drinksGiven.beers%> 🍺 <%=doc.data().drinksGiven.shots%> 🥃 Given
+    <th style="width: 250px">
+      <%=doc.data().drinksReceived.beers%> 🍺 <%=doc.data().drinksReceived.shots%> 🥃 Received
+    </th>
+  </tr>
+
+  <tr>
+    <td><h1 style="color: #151E3F"><%= doc.data().userName %></h1></td>
+    <td>Following <strong><%=doc.data().numFriends%></strong> Friends></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td><h2 style="color: gray"> <%= doc.data().firstName %> <%=doc.data().lastName%> </h2></td>
+    <td>Chuggrs Outstanding: <%=doc.data().drinksOutstanding.beers%>🍺<%=doc.data().drinksOutstanding.shots%></td>
+    <td></td>
+  </tr>
+</table>
+</div>
+<% }); %>
+<%- include('partials/footer'); -%>

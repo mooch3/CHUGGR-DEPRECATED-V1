@@ -1,0 +1,135 @@
+body{
+  text-align: center;
+  color: #E0E2DB;
+  font-family: 'Lato', sans-serif;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Sansita Swashed', cursive;
+  color: #E0E2DB;
+
+}
+em {
+  font-family: 'Sansita Swashed', cursive;
+  font-size: 2rem;
+}
+nav {
+  color: #E0E2DB;
+}
+
+
+@font-face {
+  font-family: 'Tondu';
+  src: url('Tondu_Beta.ttf');
+}
+#title{
+  font-family: 'Tondu';
+  font-size: 3rem;
+  color: #E0E2DB;
+  padding-left: 3%;
+}
+.signout {
+  padding: 20% 0 0 0;
+}
+
+.navbarDiv {
+  position: absolute;
+  right: 30px;
+
+}
+.button-form {
+  display: inline;
+}
+.navbar-light {
+  color: #E0E2DB;
+}
+.topnav {
+  font-family: 'Lato', sans-serif;
+  padding: 0 2rem 0 2rem;
+  position: absolute;
+  right: 5%;
+  color: #E0E2DB;
+
+}
+nav {
+  background-color: #ff9933;
+}
+
+
+.nav-link {
+  color: #E0E2DB;
+  font-family: 'Lato', sans-serif;
+  font-weight: bold;
+
+}
+
+.nav-link:hover {
+  color: #0A2463;
+}
+.logo {
+  width: 50%;
+  position: absolute;
+  left: 20%;
+}
+.slogan {
+  padding: 23% 15% 7% 12%;
+  font-size: 3rem;
+  font-family:'Sansita Swashed', cursive;
+}
+
+
+.button {
+  margin: 0 2% 5% 2%;
+	background:linear-gradient(to bottom, #983728 5%, #a32e17 100%);
+	background-color:#983728;
+	border-radius:6px;
+	border:1px solid #8f3a2f;
+	display:inline-block;
+	cursor:pointer;
+  font-family: 'Lato', sans-serif;
+	font-size:1rem;
+	padding:8px 25px;
+	text-decoration:none;
+}
+.button:hover {
+	background:linear-gradient(to bottom, #a32e17 5%, #983728 100%);
+	background-color:#a32e17;
+}
+.button:active {
+	position:relative;
+	top:1px;
+}
+
+.blue-section{
+  background-color: #151E3F;
+  height: 500px;
+}
+
+.gray-section{
+  background-color: #E0E2DB;
+  padding: 10% 5%;
+  color: #0A2463;
+}
+.colg-lg-4 {
+  padding: 0 5%;
+}
+
+.download-cta {
+  padding: 23% 15% 7% 12%;
+  font-family: 'Lato';
+  font-size: 1.5rem;
+
+}
+.footicon {
+  padding: 2% 2%;
+}
+
+.container-fluid {
+  padding: 3% 5%;
+  background-color: #ff9933;
+}
+
+@media screen and (max-width: 1000px){
+  img.logo{
+    display: none;
+  }
+}

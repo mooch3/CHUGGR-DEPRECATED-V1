@@ -1,0 +1,120 @@
+<%- include('partials/header'); -%>
+<div id="successfulBet" class="successful-bet">
+  <h1>Bet Successfully Placed</h1>
+  <br>
+  <p>Go back to your Dashboard or place another Bet</p>
+  <form action="/managebets" method="post">
+    <br>
+    <button class= "btn btn-primary" type="submit" name="button">Back to Dashboard</button>
+  </form>
+</div>
+
+<div class="bet-choice">
+  <button class="btn btn-primary" type="button" name="button" onClick="showSpread()">Spread</button>
+  <button class="btn btn-primary" type="button" name="button" onClick="showMoneyline()">Money Line</button>
+  <button class="btn btn-primary" type="button" name="button" onClick="showSportEvent()">Event</button>
+</div>
+
+<div id="money-line">
+  <form id="money-line-form" action="/dashboard" method="post">
+
+  <div class="form-group">
+    <label>Team 1</label>
+    <input type="text" class="form-control" name="team1">
+  </div>
+  <div class="form-group">
+    <label>Team 2</label>
+    <input type="text" class="form-control" name="team2">
+  </div>
+  <div class="form-group">
+    <label>Due Date</label>
+    <input type="date" class="form-control" name="dueDate">
+  </div>
+  <div class="form-group">
+    <label>🍺</label>
+    <input type="number" class="form-control" name="beers" max="2">
+    <label>🥃</label>
+    <input type="number" class="form-control" name="shots" max="2">
+  </div>
+  <div class="form-group">
+    <label>Choose a Side</label>
+  </div>
+  <div class="form-group">
+    <label> Team 1</label>
+    <input type="radio" name="side" id="side1" value=<%= currentUser%>>
+    <label class="label-two"> Team 2</label>
+    <input type="radio" name="side"  id="side2" value=<%=currentUser%>>
+  </div>
+  <button class="btn btn-primary" type="submit">Place Bet</button>
+
+  </form>
+
+</div>
+
+<div id="sport-event">
+  <form id="sport-event-form" action="/dashboard" method="post">
+  <div class="form-group">
+    <label>Event Title</label>
+    <input type="text" class="form-control" name="title">
+  </div>
+  <div class="form-group">
+    <label>Due Date</label>
+    <input type="date" class="form-control" name="dueDate">
+  </div>
+  <div class="form-group">
+    <label>🍺</label>
+    <input type="number" class="form-control" name="beers" max="2">
+    <label>🥃</label>
+    <input type="number" class="form-control" name="shots" max="2">
+  </div>
+  <div class="form-group">
+    <label>Choose a Side</label>
+  </div>
+  <div class="form-group">
+    <label> For</label>
+    <input type="radio" name="team" id="eventSide1" value= <%=currentUser%>>
+    <label class="label-two"> Against</label>
+    <input type="radio" name="team" id="eventSide2" value= <%=currentUser%>>
+  </div>
+  <button class="btn btn-primary" type="submit">Place Bet</button>
+
+  </form>
+
+</div>
+
+<div id="spread">
+  <form id="spread-form" action="/dashboard" method="post">
+  <div class="form-group">
+    <label>Spread Title</label>
+    <input type="text" class="form-control" name="title">
+  </div>
+  <div class="form-group">
+    <label>Line</label>
+    <input type="number" class="form-control" name="line">
+  </div>
+  <div class="form-group">
+    <label>Due Date</label>
+    <input type="date" class="form-control" name="dueDate">
+  </div>
+  <div class="form-group">
+    <label>🍺</label>
+    <input type="number" class="form-control" name="beers" max="2">
+    <label>🥃</label>
+    <input type="number" class="form-control" name="shots" maxlength="2">
+  </div>
+  <div class="form-group">
+    <label>Choose a Side</label>
+  </div>
+  <div class="form-group">
+    <label>Over</label>
+    <input type="radio" name="side" id= "over" value= <%= currentUser%> >
+    <label class="label-two">Under</label>
+    <input type="radio" name="side" id="under" value= <%= currentUser %>>
+  </div>
+  <button class="btn btn-primary" type="submit">Place Bet</button>
+
+  </form>
+
+</div>
+<script src="scripts/managebets.js"></script>
+<%-include('partials/footer'); -%>
