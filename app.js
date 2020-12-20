@@ -64,12 +64,14 @@ firebase.auth().onAuthStateChanged((user) => {
       });
     });
 
-    app.get('/managebets', function(req, res) {
+    app.get('/managebets', async function(req, res) {
       const currentUser = firebase.auth().currentUser.uid
       const nameRef = firebase.auth().currentUser.firstName
+      const friendRef = await db.collection('users').doc(currentUser).collection('friends').get()
       res.render('managebets', {
         currentUser: currentUser,
-        nameRef: nameRef
+        nameRef: nameRef,
+        friendRef: friendRef
       });
     });
 

@@ -656,3 +656,48 @@ ul {
 .settings-popup ul li a:hover {
   background: rgba(0, 0, 0, .05);
 }
+
+.friend-list {
+  width: 80%;
+  display: block;
+  height: 150px;
+  border-radius: 6px;
+  margin: auto;
+  overflow: auto;
+}
+.friend-card {
+  width: 50%;
+  display: inline-block;
+  height: 40px;
+  border: 6px;
+  border: 1px solid black;
+  border-radius: 6px;
+  background-color: #E0E2DB;
+  font-size: 2rem;
+  min-width: 70px;
+  overflow: auto;
+
+}
+
+.friend-card label {
+  color: #151E3F;
+}
+input [type=checkbox] {
+  visibility: hidden;
+}
+
+.friend-select {
+ float: right;
+ margin-left: 30px;
+ height: 25px;
+ width: 25px;
+ background-color: #ff9933;
+}
+
+.bet-btn {
+  margin: 20px 0 20px 0;
+}
+
+.friend-card input:checked ~ .friend-select{
+  background-color: #ff9933;
+}

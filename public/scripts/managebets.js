@@ -22,6 +22,34 @@ const formEvent = document.getElementById('sport-event-form')
 
 // TODO add friends to bet
 
+function addFriendsToBet(selectedFriends) {
+
+  const friendChecks = document.getElementsByClassName('friend-select');
+
+  Array.from(friendChecks).forEach(friend => {
+    if (friend.checked == true){
+      const friendInfo = friend.value.split(' ');
+      selectedFriends[friendInfo[0]] = friendInfo[1];
+    };
+  });
+
+};
+
+function allBetUsers(allUsersArr) {
+
+  const allFriends = document.getElementsByClassName('friend-select');
+
+  Array.from(allFriends).forEach(friend => {
+    if (friend.checked == true){
+      const friendInfo = friend.value.split(' ');
+      const friendUid = friendInfo[0];
+      allUsersArr.push(friendUid);
+    }
+  });
+
+};
+
+
 // create a moneyline bet
 formMoneyLine.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -30,22 +58,28 @@ formMoneyLine.addEventListener('submit', (e) => {
   const betRef = firestore.collection('bets').doc();
   const side1 = document.getElementById('side1');
   const side2 = document.getElementById('side2');
+  const selectedFriends = {};
+  const allUsersArr = [currentUser]
+
+  allBetUsers(allUsersArr);
+  addFriendsToBet(selectedFriends);
+
 
   firestore.collection('users').doc(currentUser).get().then(function(doc) {
     console.log(doc.data().firstName);
-      // Wait for promise from firestore to load documents and use that data to get user first name
+    // Wait for promise from firestore to load documents and use that data to get user first name
     if (side1.checked) {
       // create bet object
       const bet = {
         dateOpened: Date.now(),
         acceptedUsers: [currentUser],
-        allUsers: [currentUser],
-        invitedUsers: {},
+        allUsers: allUsersArr,
+        invitedUsers: selectedFriends,
         team1: formMoneyLine.team1.value,
         team2: formMoneyLine.team2.value,
         title: formMoneyLine.team1.value + " vs. " + formMoneyLine.team2.value,
         outstandingUsers: {},
-        dueDate: new Date(formMoneyLine.dueDate.value).getTime(),
+        dueDate: new Date(formMoneyLine.dueDate.value).getTime() / 1000,
         stake: {
           beers: parseInt(formMoneyLine.beers.value),
           shots: parseInt(formMoneyLine.shots.value)
@@ -69,13 +103,13 @@ formMoneyLine.addEventListener('submit', (e) => {
       const bet = {
         dateOpened: Date.now(),
         acceptedUsers: [currentUser],
-        allUsers: [currentUser],
-        invitedUsers: {},
+        allUsers: allUsersArr,
+        invitedUsers: selectedFriends,
         team1: formMoneyLine.team1.value,
         team2: formMoneyLine.team2.value,
         title: formMoneyLine.team1.value + " vs. " + formMoneyLine.team2.value,
         outstandingUsers: {},
-        dueDate: new Date(formMoneyLine.dueDate.value).getTime(),
+        dueDate: new Date(formMoneyLine.dueDate.value).getTime() / 1000,
         stake: {
           beers: parseInt(formMoneyLine.beers.value),
           shots: parseInt(formMoneyLine.shots.value)
@@ -110,6 +144,11 @@ formSpread.addEventListener('submit', (e) => {
   const betRef = firestore.collection('bets').doc();
   const over = document.getElementById('over');
   const under = document.getElementById('under');
+  const selectedFriends = {};
+  const allUsersArr = [currentUser];
+
+  allBetUsers(allUsersArr);
+  addFriendsToBet(selectedFriends);
 
   // Wait for promise from firestore to load documents and use that data to get user first name
   firestore.collection('users').doc(currentUser).get().then(function(doc) {
@@ -118,10 +157,10 @@ formSpread.addEventListener('submit', (e) => {
       const bet = {
         betID: betRef.id,
         dateOpened: Date.now(),
-        dueDate: new Date(formSpread.dueDate.value).getTime(),
+        dueDate: new Date(formSpread.dueDate.value).getTime() / 1000,
         acceptedUsers: [currentUser],
-        allUsers: [currentUser],
-        invitedUsers: {},
+        allUsers: allUsersArr,
+        invitedUsers: selectedFriends,
         side1Users: {
           [currentUser]: doc.data().firstName
         },
@@ -150,10 +189,10 @@ formSpread.addEventListener('submit', (e) => {
       const bet = {
         betID: betRef.id,
         dateOpened: Date.now(),
-        dueDate: new Date(formSpread.dueDate.value).getTime(),
+        dueDate: new Date(formSpread.dueDate.value).getTime() / 1000,
         acceptedUsers: [currentUser],
-        allUsers: [currentUser],
-        invitedUsers: {},
+        allUsers: allUsersArr,
+        invitedUsers: selectedFriends,
         side1Users: {},
         side2Users: {
           [currentUser]: doc.data().firstName
@@ -189,6 +228,11 @@ formEvent.addEventListener('submit', (e) => {
   const betRef = firestore.collection('bets').doc();
   const eventSide1 = document.getElementById('eventSide1');
   const eventSide2 = document.getElementById('eventSide2');
+  const selectedFriends = {};
+  const allUsersArr = [currentUser]
+
+  allBetUsers(allUsersArr);
+  addFriendsToBet(selectedFriends);
   // Wait for promise from firestore to load documents and use that data to get user first name
   firestore.collection('users').doc(currentUser).get().then(function(doc) {
     if (eventSide1.checked) {
@@ -197,10 +241,10 @@ formEvent.addEventListener('submit', (e) => {
         betID: betRef.id,
         title: formEvent.title.value,
         dateOpened: Date.now(),
-        dueDate: new Date(formEvent.dueDate.value).getTime(),
+        dueDate: new Date(formEvent.dueDate.value).getTime() / 1000,
         acceptedUsers: [currentUser],
-        allUsers: [currentUser],
-        invitedUsers: {},
+        allUsers: allUsersArr,
+        invitedUsers: selectedFriends,
         side1Users: {
           [currentUser]: doc.data().firstName
         },
@@ -225,10 +269,10 @@ formEvent.addEventListener('submit', (e) => {
         betID: betRef.id,
         title: formEvent.title.value,
         dateOpened: Date.now(),
-        dueDate: new Date(formEvent.dueDate.value).getTime(),
+        dueDate: new Date(formEvent.dueDate.value).getTime() / 1000,
         acceptedUsers: [currentUser],
-        allUsers: [currentUser],
-        invitedUsers: {},
+        allUsers: allUsersArr,
+        invitedUsers: selectedFriends,
         side1Users: {},
         side2Users: {
           [currentUser]: doc.data().firstName

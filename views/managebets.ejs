@@ -45,6 +45,16 @@
     <label class="label-two"> Team 2</label>
     <input type="radio" name="side"  id="side2" value=<%=currentUser%>>
   </div>
+  <label>Invite Friends to the Bet</label>
+  <div class="friend-list">
+    <% friendRef.forEach(friend => { %>
+      <div class="friend-card">
+        <label for="friend"><%=friend.data().firstName%> <%=friend.data().lastName%> (<%=friend.data().userName%>)</label>
+        <input type="checkbox" class="friend-select" value="<%=friend.data().uid%> <%=friend.data().firstName%>">
+      </div>
+
+    <%}); %>
+  </div>
   <button class="btn btn-primary" type="submit">Place Bet</button>
 
   </form>
@@ -75,6 +85,16 @@
     <input type="radio" name="team" id="eventSide1" value= <%=currentUser%>>
     <label class="label-two"> Against</label>
     <input type="radio" name="team" id="eventSide2" value= <%=currentUser%>>
+  </div>
+  <label>Invite Friends to the Bet</label>
+  <div class="friend-list">
+    <% friendRef.forEach(friend => { %>
+      <div class="friend-card">
+        <label for="friend"><%=friend.data().firstName%> <%=friend.data().lastName%> (<%=friend.data().userName%>)</label>
+        <input type="checkbox" class="friend-select" value="<%=friend.data().uid%> <%=friend.data().firstName%>">
+      </div>
+
+    <%}); %>
   </div>
   <button class="btn btn-primary" type="submit">Place Bet</button>
 
@@ -111,8 +131,18 @@
     <label class="label-two">Under</label>
     <input type="radio" name="side" id="under" value= <%= currentUser %>>
   </div>
-  <button class="btn btn-primary" type="submit">Place Bet</button>
 
+  <label>Invite Friends to the Bet</label>
+  <div class="friend-list">
+    <% friendRef.forEach(friend => { %>
+      <div class="friend-card">
+        <label for="friend"><%=friend.data().firstName%> <%=friend.data().lastName%> (<%=friend.data().userName%>)</label>
+        <input type="checkbox" class="friend-select" value="<%=friend.data().uid%> <%=friend.data().firstName%>">
+      </div>
+
+    <%}); %>
+  </div>
+<button class="btn btn-primary bet-btn" type="submit">Place Bet</button>
   </form>
 
 </div>
