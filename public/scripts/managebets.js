@@ -44,6 +44,7 @@ formMoneyLine.addEventListener('submit', (e) => {
         team1: formMoneyLine.team1.value,
         team2: formMoneyLine.team2.value,
         title: formMoneyLine.team1.value + " vs. " + formMoneyLine.team2.value,
+        outstandingUsers: {},
         dueDate: new Date(formMoneyLine.dueDate.value).getTime(),
         stake: {
           beers: parseInt(formMoneyLine.beers.value),
@@ -73,6 +74,7 @@ formMoneyLine.addEventListener('submit', (e) => {
         team1: formMoneyLine.team1.value,
         team2: formMoneyLine.team2.value,
         title: formMoneyLine.team1.value + " vs. " + formMoneyLine.team2.value,
+        outstandingUsers: {},
         dueDate: new Date(formMoneyLine.dueDate.value).getTime(),
         stake: {
           beers: parseInt(formMoneyLine.beers.value),
@@ -125,6 +127,7 @@ formSpread.addEventListener('submit', (e) => {
         },
         side2Users: {},
         title: formSpread.title.value,
+        outstandingUsers: {},
         line: parseInt(formSpread.line.value),
         stake: {
           beers: parseInt(formSpread.beers.value),
@@ -156,6 +159,7 @@ formSpread.addEventListener('submit', (e) => {
           [currentUser]: doc.data().firstName
         },
         title: formSpread.title.value,
+        outstandingUsers: {},
         line: parseInt(formSpread.line.value),
         stake: {
           beers: parseInt(formSpread.beers.value),
@@ -207,6 +211,7 @@ formEvent.addEventListener('submit', (e) => {
         },
         type: "event",
         isFinished: false,
+        outstandingUsers: {},
       }
       betRef.set(bet).then(() => {
         formEvent.reset();
@@ -234,6 +239,7 @@ formEvent.addEventListener('submit', (e) => {
         },
         type: "event",
         isFinished: false,
+        outstandingUsers: {},
       }
       betRef.set(bet).then(() => {
         formEvent.reset();

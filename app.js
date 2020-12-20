@@ -77,11 +77,15 @@ firebase.auth().onAuthStateChanged((user) => {
     app.get('/bets/:betId', async function(req, res) {
       // TODO: Create dynamic page for each page
       const requestedBet = req.params.betId;
+      const currentUser = firebase.auth().currentUser.uid;
       const bet = await db.collection('bets').doc(requestedBet).get();
       const chatRef = await db.collection('chatRooms').doc('chatTest').collection('actualMessages').get()
       console.log(bet.data())
         res.render('bets', {
           bet: bet.data(),
+          chatRef: chatRef,
+          currentUser: currentUser,
+          betID: requestedBet
         });
 
 

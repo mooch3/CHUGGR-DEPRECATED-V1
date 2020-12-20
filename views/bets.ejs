@@ -2,7 +2,9 @@
 
 
 <div class="bet">
-  <h1>Bet Page</h1>
+  <input type="hidden" id="currentUser" value=<%=currentUser%>>
+  <input type="hidden" id="betID" value=<%=betID%>>
+  <h1>Bet Details</h1>
 </div>
   <div>
   <table class="bet-card">
@@ -34,18 +36,21 @@
         <img src="/images/CHUGGRLogo.png" alt="">
       </div>
 
+
       <div class="chat-group-name">
         <!-- bet name -->
       </div>
-      <div class="chatbox-icons">
       </div>
-      <div class="chat-input-holder">
-        <textarea class="chat-input"></textarea>
-        <input type="submit" value="Send" class="message-send" />
-      </div>
-    </div>
+      <div class="chat-messages" id="chat-message-container">
+</div>
+</div>
+<div class="chat-input-holder">
+    <input type="text" class="chat-input" id="chatValue"></input>
+    <input type="submit" value="Send" class="message-send" id="sendMessage"/>
+
 
 </div>
+
 <script src="/scripts/chat.js"></script>
 <script src="/scripts/DashboardCleanUp.js"></script>
 
