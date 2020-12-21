@@ -60,7 +60,16 @@ firebase.auth().onAuthStateChanged((user) => {
       const docs = await db.collection('bets').where('acceptedUsers', 'array-contains', currentUser).get()
 
       res.render('dashboard', {
-        docs: docs
+        docs: docs,
+        currentUser: currentUser
+      });
+    });
+
+    app.get('/pendingbets', async function(req, res) {
+      const currentUser = firebase.auth().currentUser.uid;
+
+      res.render('pendingbets', {
+        currentUser: currentUser,
       });
     });
 
@@ -93,11 +102,6 @@ firebase.auth().onAuthStateChanged((user) => {
 
 
       });
-
-
-
-
-
 
     // Get user profile
     app.get('/profile', async function(req, res) {

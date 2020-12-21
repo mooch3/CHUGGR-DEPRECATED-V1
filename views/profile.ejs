@@ -5,29 +5,38 @@
 <div class="">
 
 
-<table class="profile-data">
-  <tr>
-    <th>
-      <img id="placeholder" src="images/CHUGGRLogo.png" alt="">
-    </th>
-    <th>
-       <%=doc.data().drinksGiven.beers%> 🍺 <%=doc.data().drinksGiven.shots%> 🥃 Given
-    <th style="width: 250px">
-      <%=doc.data().drinksReceived.beers%> 🍺 <%=doc.data().drinksReceived.shots%> 🥃 Received
-    </th>
-  </tr>
+  <table class="profile-data">
+    <tr>
+      <th style="border-radius: 15px 0 0 0;">
+        <img id="placeholder" src="images/CHUGGRLogo.png" alt="">
+      </th>
 
-  <tr>
-    <td><h1 style="color: #151E3F"><%= doc.data().userName %></h1></td>
-    <td>Following <strong><%=doc.data().numFriends%></strong> Friends></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td><h2 style="color: gray"> <%= doc.data().firstName %> <%=doc.data().lastName%> </h2></td>
-    <td>Chuggrs Outstanding: <%=doc.data().drinksOutstanding.beers%>🍺<%=doc.data().drinksOutstanding.shots%></td>
-    <td></td>
-  </tr>
-</table>
+      <th>Following <strong><%=doc.data().numFriends%></strong> Friends </th>
+      <th style="width: 250px; border-radius: 0 15px 0 0">
+        <%=doc.data().drinksGiven.beers%> 🍺 <%=doc.data().drinksGiven.shots%> 🥃 Given
+      </th>
+    </tr>
+
+    <tr>
+      <td>
+        <h1 style="color: #151E3F;"><%= doc.data().userName %></h1>
+      </td>
+      <td><%=doc.data().numBets%> Bets Made</td>
+      <td><%=doc.data().drinksReceived.beers%> 🍺 <%=doc.data().drinksReceived.shots%> 🥃 Received</td>
+    </tr>
+    <tr>
+      <td>
+        <h2 style="color: gray; font-size: 1.5rem"> <%= doc.data().firstName %> <%=doc.data().lastName%> </h2>
+      </td>
+      <td><%=doc.data().betsWon%> Bets Won</td>
+      <td><%=doc.data().drinksOutstanding.beers%>🍺<%=doc.data().drinksOutstanding.shots%> Outstanding</td>
+    </tr>
+    <tr>
+      <td style="border-radius: 0 0 0 15px; font-family: 'Sansita Swashed'"><%=doc.data().bio %></td>
+      <td> <%=doc.data().betsLost%> Bets Lost</td>
+      <td style="border-radius: 0 0 15px 0"></td>
+    </tr>
+  </table>
 </div>
 <% }); %>
 <%- include('partials/footer'); -%>
