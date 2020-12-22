@@ -193,12 +193,6 @@ input[type=submit] {
 
   }
 
-
-  .send-message {
-  background-color: #983728;
-  border-radius: 10%;
-  width: 6rem;
-  }
 .hidden-div {
   display: none;
 }
@@ -580,7 +574,6 @@ ul {
   color: white;
   font-size: 12px;
   padding: 0 15px;
-  border-radius: 10px;
   border: none;
   text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
 }
@@ -696,15 +689,14 @@ ul {
   color: #151E3F;
 }
 input [type=checkbox] {
-  visibility: hidden;
+  margin: 4px;
 }
 
 .friend-select {
  float: right;
- margin-left: 30px;
+ margin: 4px 4px 4px 30px;
  height: 25px;
  width: 25px;
- background-color: #ff9933;
 }
 
 .bet-btn {
@@ -723,4 +715,33 @@ input [type=checkbox] {
   padding: 10px 0 10px 0;
   font-family: 'Sansita Swashed', cursive;
   display: none;
+}
+.close-bet {
+  width: 30%;
+  display: inline-block;
+  position: absolute;
+  right: 10%;
+  bottom: -5%;
+  text-align: center;
+  height: 350px;
+}
+
+.close-bet input {
+  margin: 20px 20px 0 20px;
+
+}
+
+.close-bet button {
+  margin-top: 40px;
+
+}
+.winner-select {
+margin: 4px 4px 4px 30px;
+height: 25px;
+width: 25px;
+}
+
+.close-bet label {
+  font-size: 2rem;
+  margin-left: 20px;
 }

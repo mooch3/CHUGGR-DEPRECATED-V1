@@ -17,8 +17,10 @@ let firestore = firebase.firestore();
 const formMoneyLine = document.getElementById('money-line-form')
 const formSpread = document.getElementById('spread-form');
 const formEvent = document.getElementById('sport-event-form')
-
-
+// reference current user
+const currentUser = document.getElementById('currentUser').value;
+const currentRef = firestore.collection('users').doc(currentUser);
+const fieldValue = firebase.firestore.FieldValue;
 
 // TODO add friends to bet
 
@@ -78,7 +80,7 @@ formMoneyLine.addEventListener('submit', (e) => {
         team1: formMoneyLine.team1.value,
         team2: formMoneyLine.team2.value,
         title: formMoneyLine.team1.value + " vs. " + formMoneyLine.team2.value,
-        outstandingUsers: {},
+        outstandingUsers: [],
         dueDate: new Date(formMoneyLine.dueDate.value).getTime() / 1000,
         stake: {
           beers: parseInt(formMoneyLine.beers.value),
@@ -96,7 +98,7 @@ formMoneyLine.addEventListener('submit', (e) => {
         formMoneyLine.reset();
         formMoneyLine.style.display = "none";
         document.getElementById('successfulBet').style.display = "block";
-
+        incrementBetTotal();
       });
 
     } else if (side2.checked) {
@@ -108,7 +110,7 @@ formMoneyLine.addEventListener('submit', (e) => {
         team1: formMoneyLine.team1.value,
         team2: formMoneyLine.team2.value,
         title: formMoneyLine.team1.value + " vs. " + formMoneyLine.team2.value,
-        outstandingUsers: {},
+        outstandingUsers: [],
         dueDate: new Date(formMoneyLine.dueDate.value).getTime() / 1000,
         stake: {
           beers: parseInt(formMoneyLine.beers.value),
@@ -126,7 +128,7 @@ formMoneyLine.addEventListener('submit', (e) => {
         formMoneyLine.reset();
         formMoneyLine.style.display = "none";
         document.getElementById('successfulBet').style.display = "block";
-
+        incrementBetTotal();
       });
     };
   });
@@ -166,7 +168,7 @@ formSpread.addEventListener('submit', (e) => {
         },
         side2Users: {},
         title: formSpread.title.value,
-        outstandingUsers: {},
+        outstandingUsers: [],
         line: parseInt(formSpread.line.value),
         stake: {
           beers: parseInt(formSpread.beers.value),
@@ -180,7 +182,7 @@ formSpread.addEventListener('submit', (e) => {
         formSpread.reset();
         formSpread.style.display = "none";
         document.getElementById('successfulBet').style.display = "block";
-
+        incrementBetTotal();
       });
 
     } else if (under.checked) {
@@ -198,7 +200,7 @@ formSpread.addEventListener('submit', (e) => {
           [currentUser]: doc.data().firstName
         },
         title: formSpread.title.value,
-        outstandingUsers: {},
+        outstandingUsers: [],
         line: parseInt(formSpread.line.value),
         stake: {
           beers: parseInt(formSpread.beers.value),
@@ -211,7 +213,7 @@ formSpread.addEventListener('submit', (e) => {
         formSpread.reset();
         formSpread.style.display = "none";
         document.getElementById('successfulBet').style.display = "block";
-
+        incrementBetTotal();
       });
     };
 
@@ -255,13 +257,13 @@ formEvent.addEventListener('submit', (e) => {
         },
         type: "event",
         isFinished: false,
-        outstandingUsers: {},
+        outstandingUsers: [],
       }
       betRef.set(bet).then(() => {
         formEvent.reset();
         formEvent.style.display = "none"
         document.getElementById('successfulBet').style.display = "block"
-
+        incrementBetTotal();
       });
 
     } else if (eventSide2.checked) {
@@ -283,13 +285,13 @@ formEvent.addEventListener('submit', (e) => {
         },
         type: "event",
         isFinished: false,
-        outstandingUsers: {},
+        outstandingUsers: [],
       }
       betRef.set(bet).then(() => {
         formEvent.reset();
         formEvent.style.display = "none"
         document.getElementById('successfulBet').style.display = "block";
-
+        incrementBetTotal();
       });
     };
 
@@ -359,4 +361,8 @@ function showSpread() {
 
   }
 
+}
+
+function incrementBetTotal() {
+  currentRef.update({numBets: fieldValue.increment(1)})
 }

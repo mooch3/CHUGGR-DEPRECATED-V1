@@ -4,10 +4,12 @@
 <div class="bet">
   <input type="hidden" id="currentUser" value=<%=currentUser%>>
   <input type="hidden" id="betID" value=<%=betID%>>
+  <input type="hidden" id="beers" value=<%=bet.stake.beers%>>
+  <input type="hidden" id="shots" value="<%=bet.stake.shots%>">
   <h1>Bet Details</h1>
 </div>
   <div>
-  <table class="bet-card">
+  <table class="bet-card" id="betCard">
   <tr>
     <td style="border-radius: 15px 0 0 0"><strong><%= bet.title%></strong> </td>
     <td><%=bet.type%></td>
@@ -27,9 +29,19 @@
 
 </div>
 
+<div class="close-bet">
+<form id = "closeItOut" method="post" action="/bets/<%=bet.betID%>">
+  <h1>Close the Bet</h1>
+  <p> Who won?</p>
+  <label id="side1Radio"><%=bet.team1%></label>
+  <input type="radio" name="winner" id="side1UsersSelect" class="winner-select">
+  <label id="side2Radio"><%=bet.team2%></label>
+  <input type="radio" name="winner" id="side2UsersSelect" class="winner-select">
+  <br>
+  </form>
+  <button  name="submit" class="btn btn-primary" id="closeBetButton">Close Bet</button>
 
-
-
+</div>
   <div class="chatbox group-chat">
     <div class="chatbox-top">
       <div class="chatbox-avatar">
@@ -53,6 +65,10 @@
 
 <script src="/scripts/chat.js"></script>
 <script src="/scripts/DashboardCleanUp.js"></script>
+<script src="/scripts/betCleaner.js"></script>
+<script src="/scripts/closebets.js">
+
+</script>
 
 
 

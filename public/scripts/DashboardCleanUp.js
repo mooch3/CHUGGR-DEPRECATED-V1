@@ -1,16 +1,19 @@
 // Check to see isFinished boolean and render a "Closed" or "Pending" to view
-isDone = function() {
-  const finishedBets = document.getElementsByClassName('isFinished');
+function isDone() {
+  const betCardDeck = document.getElementsByClassName('bet-card');
+  Array.from(betCardDeck).forEach((betCard) => {
+    const isFinished = betCard.rows[2].cells[1];
+    if(isFinished.innerHTML == "false"){
+      isFinished.innerHTML = "Pending";
+      isFinished.style.color = "green";
 
-  Array.from(finishedBets).forEach((finishedBet) => {
-    if (finishedBet.innerHTML = "false") {
-      finishedBet.innerHTML = "Pending";
-      finishedBet.style.color = "green";
-    } else {
-      finishedBet.innerHTML = "Closed";
-      finishedBet.style.color = "red";
+    } else if (isFinished.innerHTML == "true") {
+      isFinished.innerHTML = "Closed";
+      isFinished.style.color = "red"
     }
-  });
+
+  })
+
 
 };
 
@@ -28,6 +31,7 @@ cleanBet = function() {
       betCard.rows[0].cells[1].innerHTML = "Spread";
       betCard.rows[1].cells[0].innerHTML = betCard.rows[1].cells[0].innerHTML.replace("undefined: ", "Over: ");
       betCard.rows[2].cells[0].innerHTML = betCard.rows[2].cells[0].innerHTML.replace("undefined: ", "Under: ");
+
 
     } else if (betCard.rows[0].cells[1].innerHTML == "event") {
       betCard.rows[0].cells[1].innerHTML = "Event";

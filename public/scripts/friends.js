@@ -23,7 +23,7 @@ const currentUser = friendForm.me.value;
 const usersRef = firestore.collection('users').where('uid', 'not-in', [currentUser]);
 const friendRef = firestore.collection('users').doc(currentUser).collection('friends');
 const currentRef = firestore.collection('users').doc(currentUser);
-const fieldValue = firebase.firestore.FieldValue
+const fieldValue = firebase.firestore.FieldValue;
 const potentialFriends = [];
 const friendObjects = [];
 
@@ -86,7 +86,6 @@ function addFriendFunc(friendObjects) {
             document.getElementById('friendSuccess').style.display = 'none';
           }, 5000);
           friendForm.reset();
-          // incrementor does not work?
           increment();
 
 

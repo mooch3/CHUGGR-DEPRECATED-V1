@@ -67,9 +67,13 @@ firebase.auth().onAuthStateChanged((user) => {
 
     app.get('/pendingbets', async function(req, res) {
       const currentUser = firebase.auth().currentUser.uid;
+      const pendingBets = db.collection('bets').where('allUsers', 'array-contains', currentUser).orderBy('dateOpened', 'desc');
+
+      const snapshot = await pendingBets.get();
 
       res.render('pendingbets', {
         currentUser: currentUser,
+        snapshot: snapshot
       });
     });
 
@@ -126,26 +130,6 @@ firebase.auth().onAuthStateChanged((user) => {
 
 
 // Render bet pages dynamically
-app.post('/bets/:betId', async function(req, res) {
-  // Post request to send chat message to firestore gets rendered real time on client side
-
-  const uid = firebase.auth().currentUser.uid
-  const docRef = await db.collection('chatRooms').doc('chatTest').collection('actualMessages')
-
-  // http request headers sent error?
-  docRef.add({
-    message: req.body.message,
-    sender: uid,
-    timestamp: Date.now()
-  }).then(() => {
-    console.log('message is saved to chat')
-  }).catch((err) => {
-    console.log(err)
-  });
-
-});
-
-
 
 // Accessible when user is not logged in
 app.get('/', (req, res) => {
@@ -155,7 +139,7 @@ app.get('/', (req, res) => {
 app.get('/createAccount', (req, res) => {
   res.render('createAccount')
 });
-
+// TODO create a check if the email is already in use
 app.get('/signin', (req, res) => {
   res.render('signin')
 });
@@ -230,6 +214,13 @@ app.post('/createAccount', (req, res) => {
   });
 
 });
+app.post('/bets/:betID', async function (req, res){
+
+});
+
+app.post('/pendingbets', async function(req, res){
+
+});
 // TODO: add a friend to your friends list
 app.post('/friends', async function(req, res) {
 
@@ -257,7 +248,6 @@ app.post('/SignIn', (req, res) => {
 });
 
 // Sign out throwing http error "header sent" when you log out and log back in
-// This means there must have data being sent multiple times
 app.post('/signout', (req, res) => {
 
   firebase.auth().signOut().then(function() {

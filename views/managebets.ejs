@@ -1,8 +1,10 @@
 <%- include('partials/header'); -%>
+<!-- TODO: 60 character limit on bet title -->
 <div id="successfulBet" class="successful-bet">
   <h1>Bet Successfully Placed</h1>
   <br>
   <p>Go back to your Dashboard or place another Bet</p>
+  <input type="hidden" id="currentUser" value=<%=currentUser%>>
   <form action="/managebets" method="post">
     <br>
     <button class= "btn btn-primary" type="submit" name="button">Back to Dashboard</button>
@@ -20,28 +22,28 @@
 
   <div class="form-group">
     <label>Team 1</label>
-    <input type="text" class="form-control" name="team1">
+    <input type="text" class="form-control" name="team1" required>
   </div>
   <div class="form-group">
     <label>Team 2</label>
-    <input type="text" class="form-control" name="team2">
+    <input type="text" class="form-control" name="team2" required>
   </div>
   <div class="form-group">
     <label>Due Date</label>
-    <input type="date" class="form-control" name="dueDate">
+    <input type="date" class="form-control" name="dueDate" required>
   </div>
   <div class="form-group">
     <label>🍺</label>
-    <input type="number" class="form-control" name="beers" max="2">
+    <input type="number" class="form-control" name="beers" max="2" required>
     <label>🥃</label>
-    <input type="number" class="form-control" name="shots" max="2">
+    <input type="number" class="form-control" name="shots" max="2" required>
   </div>
   <div class="form-group">
     <label>Choose a Side</label>
   </div>
   <div class="form-group">
     <label> Team 1</label>
-    <input type="radio" name="side" id="side1" value=<%= currentUser%>>
+    <input type="radio" name="side" id="side1" value=<%= currentUser%> required>
     <label class="label-two"> Team 2</label>
     <input type="radio" name="side"  id="side2" value=<%=currentUser%>>
   </div>
@@ -65,24 +67,24 @@
   <form id="sport-event-form" action="/dashboard" method="post">
   <div class="form-group">
     <label>Event Title</label>
-    <input type="text" class="form-control" name="title">
+    <input type="text" class="form-control" name="title" required>
   </div>
   <div class="form-group">
     <label>Due Date</label>
-    <input type="date" class="form-control" name="dueDate">
+    <input type="date" class="form-control" name="dueDate" required>
   </div>
   <div class="form-group">
     <label>🍺</label>
-    <input type="number" class="form-control" name="beers" max="2">
+    <input type="number" class="form-control" name="beers" max="2" required>
     <label>🥃</label>
-    <input type="number" class="form-control" name="shots" max="2">
+    <input type="number" class="form-control" name="shots" max="2" required>
   </div>
   <div class="form-group">
     <label>Choose a Side</label>
   </div>
   <div class="form-group">
     <label> For</label>
-    <input type="radio" name="team" id="eventSide1" value= <%=currentUser%>>
+    <input type="radio" name="team" id="eventSide1" value= <%=currentUser%> required>
     <label class="label-two"> Against</label>
     <input type="radio" name="team" id="eventSide2" value= <%=currentUser%>>
   </div>
@@ -106,28 +108,28 @@
   <form id="spread-form" action="/dashboard" method="post">
   <div class="form-group">
     <label>Spread Title</label>
-    <input type="text" class="form-control" name="title">
+    <input type="text" class="form-control" name="title" required>
   </div>
   <div class="form-group">
     <label>Line</label>
-    <input type="number" class="form-control" name="line">
+    <input type="number" class="form-control" name="line" required>
   </div>
   <div class="form-group">
     <label>Due Date</label>
-    <input type="date" class="form-control" name="dueDate">
+    <input type="date" class="form-control" name="dueDate" required>
   </div>
   <div class="form-group">
     <label>🍺</label>
-    <input type="number" class="form-control" name="beers" max="2">
+    <input type="number" class="form-control" name="beers" max="2" required>
     <label>🥃</label>
-    <input type="number" class="form-control" name="shots" maxlength="2">
+    <input type="number" class="form-control" name="shots" maxlength="2" required>
   </div>
   <div class="form-group">
     <label>Choose a Side</label>
   </div>
   <div class="form-group">
     <label>Over</label>
-    <input type="radio" name="side" id= "over" value= <%= currentUser%> >
+    <input type="radio" name="side" id= "over" value= <%= currentUser%> required>
     <label class="label-two">Under</label>
     <input type="radio" name="side" id="under" value= <%= currentUser %>>
   </div>
