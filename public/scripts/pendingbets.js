@@ -15,9 +15,9 @@ const fieldValue = firebase.firestore.FieldValue;
 
 
 const currentUser = document.getElementById('currentUser').value;
-const pendingBets = firestore.collection('bets').where('allUsers', 'array-contains', currentUser);
+const pendingBets = firestore.collection('testBets').where('allUsers', 'array-contains', currentUser);
 const orderedBets = pendingBets.orderBy('dateOpened', 'desc');
-const currentRef = firestore.collection('users').doc(currentUser);
+const currentRef = firestore.collection('testUsers').doc(currentUser);
 
 function fixData(betCardDeck) {
 
@@ -59,7 +59,7 @@ function betButtonFunc(betForms) {
     let btn1 = document.getElementById('btn1' + betID);
     let btn2 = document.getElementById('btn2' + betID);
 
-    let betRef = firestore.collection('bets').doc(betID);
+    let betRef = firestore.collection('testBets').doc(betID);
     console.log(sideOne.checked);
 
       btn1.addEventListener('click', (e) => {

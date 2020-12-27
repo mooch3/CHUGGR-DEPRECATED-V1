@@ -1,6 +1,6 @@
 <%- include('partials/header') -%>
 
-
+<% const dueDate = new Date(bet.dueDate*1000) %>
 <div class="bet">
   <input type="hidden" id="currentUser" value=<%=currentUser%>>
   <input type="hidden" id="betID" value=<%=betID%>>
@@ -8,57 +8,76 @@
   <input type="hidden" id="shots" value="<%=bet.stake.shots%>">
   <h1>Bet Details</h1>
 </div>
-  <div>
+<div>
   <table class="bet-card" id="betCard">
-  <tr>
-    <td style="border-radius: 15px 0 0 0"><strong><%= bet.title%></strong> </td>
-    <td><%=bet.type%></td>
-    <td style="border-radius: 0 15px 0 0"><%=bet.stake.beers%>🍺 <%= bet.stake.shots%>🥃</td>
-  </tr>
-  <tr>
-    <td class="participant"><%=bet.team1 + ": "%> <i><%=Object.values(bet.side1Users)%></i> </td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td class="participant" style="border-radius: 0 0 0 15px"><%=bet.team2 + ": "%> <i><%=Object.values(bet.side2Users)%></i></td>
-    <td class="isFinished"><%=bet.isFinished%></td>
-    <td style="border-radius: 0 0 15px 0"></td>
-  </tr>
-</table>
+    <tr>
+      <td style="border-radius: 15px 0 0 0"><strong><%= bet.title%></strong> </td>
+      <td><%=bet.type%></td>
+      <td style="border-radius: 0 15px 0 0"><%=bet.stake.beers%>🍺 <%= bet.stake.shots%>🥃</td>
+    </tr>
+    <tr>
+      <td class="participant"><%=bet.team1 + ": "%> <i><%=Object.values(bet.side1Users)%></i> </td>
+      <td>Due Date: <%=dueDate.getDate() + "/" + (dueDate.getMonth()+1) + "/" + dueDate.getFullYear()%> </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="participant" style="border-radius: 0 0 0 15px"><%=bet.team2 + ": "%> <i><%=Object.values(bet.side2Users)%></i></td>
+      <% if(bet.dueDate*1000 < Date.now() && bet.isFinished == false){ %>
+      <td style="color: red">Over Due</td>
+      <%} else if (bet.isFinished == false){%>
+      <td style="color: green">Pending</td>
+      <%} else if (bet.isFinished == true && bet.outstandingUsers.includes(currentUser)){%>
+      <td style="color: #ff9933">You Owe Drinks</td>
+      <%} else if (bet.isFinished == true && !bet.outstandingUsers.includes(currentUser)){%>
+      <td style="color: #151E3F">Closed</td>
+      <%};%>
+      <td style="border-radius: 0 0 15px 0"></td>
+    </tr>
+  </table>
 
 </div>
-
-<div class="close-bet">
-<form id = "closeItOut" method="post" action="/bets/<%=bet.betID%>">
-  <h1>Close the Bet</h1>
-  <p> Who won?</p>
-  <label id="side1Radio"><%=bet.team1%></label>
-  <input type="radio" name="winner" id="side1UsersSelect" class="winner-select">
-  <label id="side2Radio"><%=bet.team2%></label>
-  <input type="radio" name="winner" id="side2UsersSelect" class="winner-select">
-  <br>
+<% if(bet.isFinished == false){ %>
+<div class="close-bet" id="closeBox">
+  <form id="closeItOut" method="post" action="/bets/<%=bet.betID%>">
+    <h1>Close the Bet</h1>
+    <p> Who won?</p>
+    <label id="side1Radio"><%=bet.team1%></label>
+    <input type="radio" name="winner" id="side1UsersSelect" class="winner-select">
+    <label id="side2Radio"><%=bet.team2%></label>
+    <input type="radio" name="winner" id="side2UsersSelect" class="winner-select">
+    <br>
   </form>
-  <button  name="submit" class="btn btn-primary" id="closeBetButton">Close Bet</button>
-
+  <button name="submit" class="btn btn-primary" id="closeBetButton">Close Bet</button>
 </div>
-  <div class="chatbox group-chat">
-    <div class="chatbox-top">
-      <div class="chatbox-avatar">
-        <img src="/images/CHUGGRLogo.png" alt="">
-      </div>
+<%} else if (bet.isFinished == true && bet.outstandingUsers.includes(currentUser)){%>
+  <div class="close-bet" id="closeBox">
+    <form id="outstandingDone" method="post" action="/bets/<%=bet.betID%>">
+      <h1>Did You Fulfill Your Bet?</h1>
+      <p> Do you promise?</p>
+      <label id="outstandingBtn">Yes, I promise.</label>
+      <input type="radio" name="outstanding" id="outstandingBtnSelect" class="winner-select">
+      <br>
+    </form>
+    <button name="submit" class="btn btn-primary" id="outstandingBetButton">Tribute Was Paid</button>
+  </div>
+<%};%>
+<div class="chatbox group-chat">
+  <div class="chatbox-top">
+    <div class="chatbox-avatar">
+      <img src="/images/CHUGGRLogo.png" alt="">
+    </div>
 
 
-      <div class="chat-group-name">
-        <!-- bet name -->
-      </div>
-      </div>
-      <div class="chat-messages" id="chat-message-container">
-</div>
+    <div class="chat-group-name">
+      <!-- bet name -->
+    </div>
+  </div>
+  <div class="chat-messages" id="chat-message-container">
+  </div>
 </div>
 <div class="chat-input-holder">
-    <input type="text" class="chat-input" id="chatValue"></input>
-    <input type="submit" value="Send" class="message-send" id="sendMessage"/>
+  <input type="text" class="chat-input" id="chatValue"></input>
+  <input type="submit" value="Send" class="message-send" id="sendMessage" />
 
 
 </div>
@@ -66,9 +85,8 @@
 <script src="/scripts/chat.js"></script>
 <script src="/scripts/DashboardCleanUp.js"></script>
 <script src="/scripts/betCleaner.js"></script>
-<script src="/scripts/closebets.js">
+<script src="/scripts/closebets.js"></script>
 
-</script>
 
 
 

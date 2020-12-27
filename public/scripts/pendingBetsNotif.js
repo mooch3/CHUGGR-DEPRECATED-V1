@@ -13,7 +13,7 @@ const firebaseConfig = {
   let firestore = firebase.firestore();
 
   const currentUser = document.getElementById('currentUser').value;
-  const pendingBets = firestore.collection('bets').where('allUsers', 'array-contains', currentUser);
+  const pendingBets = firestore.collection('testBets').where('allUsers', 'array-contains', currentUser);
   const orderedBets = pendingBets.orderBy('dateOpened', 'desc');
 
 function showPendingBets(){

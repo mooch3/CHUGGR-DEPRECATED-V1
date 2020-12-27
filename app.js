@@ -43,6 +43,7 @@ app.use(express.static('public'));
 const db = admin.firestore();
 
 // Redirect users with authstate listener
+
 firebase.auth().onAuthStateChanged((user) => {
   if (!user) {
     app.get('/', (req, res) => {
@@ -57,8 +58,8 @@ firebase.auth().onAuthStateChanged((user) => {
       // Retrieve data from Firestore
       // Use async function to fullfill promise
       const currentUser = firebase.auth().currentUser.uid;
-      const docs = await db.collection('bets').where('acceptedUsers', 'array-contains', currentUser).get()
-
+      const docs = await db.collection('testBets').where('acceptedUsers', 'array-contains', currentUser).get()
+      console.log(currentUser)
       res.render('dashboard', {
         docs: docs,
         currentUser: currentUser
@@ -67,7 +68,7 @@ firebase.auth().onAuthStateChanged((user) => {
 
     app.get('/pendingbets', async function(req, res) {
       const currentUser = firebase.auth().currentUser.uid;
-      const pendingBets = db.collection('bets').where('allUsers', 'array-contains', currentUser).orderBy('dateOpened', 'desc');
+      const pendingBets = db.collection('testBets').where('allUsers', 'array-contains', currentUser).orderBy('dateOpened', 'desc');
 
       const snapshot = await pendingBets.get();
 
@@ -80,7 +81,7 @@ firebase.auth().onAuthStateChanged((user) => {
     app.get('/managebets', async function(req, res) {
       const currentUser = firebase.auth().currentUser.uid
       const nameRef = firebase.auth().currentUser.firstName
-      const friendRef = await db.collection('users').doc(currentUser).collection('friends').get()
+      const friendRef = await db.collection('testUsers').doc(currentUser).collection('friends').get()
       res.render('managebets', {
         currentUser: currentUser,
         nameRef: nameRef,
@@ -93,8 +94,8 @@ firebase.auth().onAuthStateChanged((user) => {
       // TODO: Create dynamic page for each page
       const requestedBet = req.params.betId;
       const currentUser = firebase.auth().currentUser.uid;
-      const bet = await db.collection('bets').doc(requestedBet).get();
-      const chatRef = await db.collection('chatRooms').doc('chatTest').collection('actualMessages').get()
+      const bet = await db.collection('testBets').doc(requestedBet).get();
+      const chatRef = await db.collection('testChatRooms').doc('chatTest').collection('actualMessages').get()
       console.log(bet.data())
         res.render('bets', {
           bet: bet.data(),
@@ -111,7 +112,7 @@ firebase.auth().onAuthStateChanged((user) => {
     app.get('/profile', async function(req, res) {
       const currentUser = firebase.auth().currentUser.uid;
       // possible to use a listener client side to reduce reads?
-      const currentUserProfile = await db.collection('users').where('uid', '==', currentUser).get()
+      const currentUserProfile = await db.collection('testUsers').where('uid', '==', currentUser).get()
 
 
       res.render('profile', {
@@ -165,7 +166,7 @@ app.post('/createAccount', (req, res) => {
 
   firebase.auth().createUserWithEmailAndPassword(email, password).then(user => {
   const uid = firebase.auth().currentUser.uid;
-  const newUser = db.collection('users').doc(uid);
+  const newUser = db.collection('testUsers').doc(uid);
 
 
     // New user doc in db
@@ -228,7 +229,7 @@ app.post('/friends', async function(req, res) {
 
 });
 // Sign Users In https request
-app.post('/SignIn', (req, res) => {
+app.post('/SignIn', function(req, res) {
   let email = req.body.inputEmail;
   let password = req.body.inputPassword;
 
@@ -241,17 +242,21 @@ app.post('/SignIn', (req, res) => {
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       // user is signed in
+      console.log(firebase.auth().currentUser)
       res.redirect('dashboard');
     }
   });
 
+
 });
 
 // Sign out throwing http error "header sent" when you log out and log back in
-app.post('/signout', (req, res) => {
+app.post('/signout', async function (req, res) {
 
   firebase.auth().signOut().then(function() {
     // Sign-out successful.
+    console.log(firebase.auth().currentUser)
+    console.log('You signed out')
     res.redirect('signout');
   }).catch(function(error) {
     // An error happened.

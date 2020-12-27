@@ -1,24 +1,31 @@
 // const currentUser = document.getElementById('currentUser').value;
 // const betID = document.getElementById('betID').value;
-const betRef = firestore.collection('bets').doc(betID);
+const betRef = firestore.collection('testBets').doc(betID);
 const fieldValue = firebase.firestore.FieldValue;
 
 
 const closeBetButton = document.getElementById('closeBetButton');
-
+const oustandingBetButton = document.getElementById('outstandingBetButton');
 
 
 betRef.get().then((doc) => {
+  if (!oustandingBetButton){
   console.log(doc.data());
   closeBetButton.addEventListener('click', (e) => {
   const side1 = document.getElementById('side1UsersSelect');
   const side2 = document.getElementById('side2UsersSelect');
   closeBet(doc, side1, side2);
   });
+} else {
+  outstandingBetButton.addEventListener('click', (e) => {
+    const outstanding = document.getElementById('outstandingBtnSelect');
+    moveOutOfOutstanding();
+    console.log('User moved out of oustanding.');
+  })
+};
 });
 
 function closeBet(doc, side1, side2) {
-  finished();
 
   let beers = doc.data().stake.beers;
   let shots = doc.data().stake.shots;
@@ -53,15 +60,17 @@ function closeBet(doc, side1, side2) {
 
   }
 removeInvitedUsers();
+finished();
+
 setTimeout(() => {
   location.reload();
-}, 300);
+}, 700);
 
 console.log('bet closed successfully');
 };
 
 function incrementWinners(winner, beers, shots) {
-  firestore.collection('users').doc(winner).update({
+  firestore.collection('testUsers').doc(winner).update({
     "drinksGiven.beers": fieldValue.increment(beers),
     "drinksGivenshots": fieldValue.increment(shots),
     betsWon: fieldValue.increment(1)
@@ -69,7 +78,7 @@ function incrementWinners(winner, beers, shots) {
 };
 
 function incrementLosers(loser, beers, shots) {
-  firestore.collection('users').doc(loser).update({
+  firestore.collection('testUsers').doc(loser).update({
     betsLost: fieldValue.increment(1),
     "drinksReceived.beers": fieldValue.increment(beers),
     "drinksReceived.shots": fieldValue.increment(shots),
@@ -107,4 +116,15 @@ function side2Winners(){
   betRef.set({
     winner: 'two'
   },{merge:true})
+}
+
+function moveOutOfOutstanding(){
+  betRef.set({
+    outstandingUsers: fieldValue.arrayRemove(currentUser),
+  }, {merge:true});
+  
+  setTimeout(() => {
+    location.reload();
+  }, 700);
+
 }

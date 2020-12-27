@@ -1,22 +1,3 @@
-// Check to see isFinished boolean and render a "Closed" or "Pending" to view
-function isDone() {
-  const betCardDeck = document.getElementsByClassName('bet-card');
-  Array.from(betCardDeck).forEach((betCard) => {
-    const isFinished = betCard.rows[2].cells[1];
-    if(isFinished.innerHTML == "false"){
-      isFinished.innerHTML = "Pending";
-      isFinished.style.color = "green";
-
-    } else if (isFinished.innerHTML == "true") {
-      isFinished.innerHTML = "Closed";
-      isFinished.style.color = "red"
-    }
-
-  })
-
-
-};
-
 // Manipulate data from db to be user friendly. Replace "undefined" catergories with under and over or for against
 cleanBet = function() {
   const betCardDeck = document.getElementsByClassName('bet-card');
@@ -43,5 +24,5 @@ cleanBet = function() {
   });
 
 };
-isDone();
+
 cleanBet();
