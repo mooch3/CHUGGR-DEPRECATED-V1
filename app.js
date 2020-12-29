@@ -33,52 +33,60 @@ app.use(express.static('public'));
 /// Database Initialization
 const db = admin.firestore();
 
-// Redirect users with authstate listener
+/// Routes
+/// Note: Uses async to retrieve db records
 
+const loadUserDashboardRoute = async function(req, res) {
+  const currentUser = firebase.auth().currentUser.uid;
+  const docs = await db.collection('testBets')
+                     .where('acceptedUsers', 'array-contains', currentUser)
+                     .get();
+  console.log(currentUser) // TODO: replace with logging
+  res.render('dashboard', {
+    docs: docs,
+    currentUser: currentUser
+  });
+};
+
+const loadPendingBetsSnapshot = async function(req, res) {
+  const currentUser = firebase.auth().currentUser.uid;
+  const pendingBets = await db.collection('testBets')
+                            .where('allUsers', 'array-contains', currentUser)
+                            .orderBy('dateOpened', 'desc')
+                            .get();
+  res.render('pendingbets', {
+    currentUser: currentUser,
+    snapshot: pendingBets
+  });
+};
+
+const loadManageBetsRoute = async function(req, res) {
+  const currentUser = firebase.auth().currentUser.uid;
+  const nameRef = firebase.auth().currentUser.firstName;
+  const friendRef = await db.collection('testUsers')
+                          .doc(currentUser)
+                          .collection('friends')
+                          .get();
+  res.render('managebets', {
+    currentUser: currentUser,
+    nameRef: nameRef,
+    friendRef: friendRef
+  });
+};
+
+//  Application Routing
+/// Note: app should only be accessible for logged in users,
+/// otherwise redirect
 firebase.auth().onAuthStateChanged((user) => {
+
   if (!user) {
-    app.get('/', (req, res) => {
-      res.render('landingpage')
-    });
-
-
-  } else {
-    // A user is detected
-
-    app.get('/dashboard', async function(req, res) {
-      // Retrieve data from Firestore
-      // Use async function to fullfill promise
-      const currentUser = firebase.auth().currentUser.uid;
-      const docs = await db.collection('testBets').where('acceptedUsers', 'array-contains', currentUser).get()
-      console.log(currentUser)
-      res.render('dashboard', {
-        docs: docs,
-        currentUser: currentUser
-      });
-    });
-
-    app.get('/pendingbets', async function(req, res) {
-      const currentUser = firebase.auth().currentUser.uid;
-      const pendingBets = db.collection('testBets').where('allUsers', 'array-contains', currentUser).orderBy('dateOpened', 'desc');
-
-      const snapshot = await pendingBets.get();
-
-      res.render('pendingbets', {
-        currentUser: currentUser,
-        snapshot: snapshot
-      });
-    });
-
-    app.get('/managebets', async function(req, res) {
-      const currentUser = firebase.auth().currentUser.uid
-      const nameRef = firebase.auth().currentUser.firstName
-      const friendRef = await db.collection('testUsers').doc(currentUser).collection('friends').get()
-      res.render('managebets', {
-        currentUser: currentUser,
-        nameRef: nameRef,
-        friendRef: friendRef
-      });
-    });
+    // route to landing page when not authenticated
+    app.get('/', (req, res) => { res.render('landingpage') });
+  }
+  else {
+    app.get('/dashboard', loadUserDashboardRoute);
+    app.get('/pendingbets', loadPendingBetsSnapshot);
+    app.get('/managebets', loadManageBetsRoute);
 
     // possible to have listner client side listening for changes?
     app.get('/bets/:betId', async function(req, res) {
