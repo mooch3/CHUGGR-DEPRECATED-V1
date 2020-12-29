@@ -5,41 +5,32 @@ const admin = require('firebase-admin');
 const firebase = require('firebase')
 const app = express();
 
+/// Constants and Environment Variables
+const SERVICE_ACCOUNT = require("/Users/smithdc/Desktop/MyApp/CHUGGR/chuggr-6a851-firebase-adminsdk-rbwee-19697363db.json"),
+      FIREBASE_CONFIG = {
+        apiKey: "AIzaSyAJGkHcDPbbLW1pf29xb-uqNc9Ygd39F04",
+        authDomain: "chuggr-6a851.firebaseapp.com",
+        databaseURL: "https://chuggr-6a851.firebaseio.com",
+        projectId: "chuggr-6a851",
+        storageBucket: "chuggr-6a851.appspot.com",
+        messagingSenderId: "1046653963698",
+        appId: "1:1046653963698:web:e26ab6a28553d00f5be8ab",
+        measurementId: "G-5TMDD3N2B2"
+      };
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAJGkHcDPbbLW1pf29xb-uqNc9Ygd39F04",
-  authDomain: "chuggr-6a851.firebaseapp.com",
-  databaseURL: "https://chuggr-6a851.firebaseio.com",
-  projectId: "chuggr-6a851",
-  storageBucket: "chuggr-6a851.appspot.com",
-  messagingSenderId: "1046653963698",
-  appId: "1:1046653963698:web:e26ab6a28553d00f5be8ab",
-  measurementId: "G-5TMDD3N2B2"
-};
-
-firebase.initializeApp(firebaseConfig);
-
-
-const serviceAccount = require("/Users/smithdc/Desktop/MyApp/CHUGGR/chuggr-6a851-firebase-adminsdk-rbwee-19697363db.json");
-
+/// Initialize Firebase
+firebase.initializeApp(FIREBASE_CONFIG);
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+  credential: admin.credential.cert(SERVICE_ACCOUNT),
   databaseURL: "https://chuggr-6a851.firebaseio.com"
 });
 
-
-
-// Set view for EJS templating engine
+/// App Configurations
 app.set('view engine', 'ejs');
-
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
-
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
-// accessible only if user is logged in
 
-// reference for firestore DB
+/// Database Initialization
 const db = admin.firestore();
 
 // Redirect users with authstate listener
