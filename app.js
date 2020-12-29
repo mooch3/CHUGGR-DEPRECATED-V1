@@ -5,89 +5,88 @@ const admin = require('firebase-admin');
 const firebase = require('firebase')
 const app = express();
 
+/// Constants and Environment Variables
+const SERVICE_ACCOUNT = require("/Users/smithdc/Desktop/MyApp/CHUGGR/chuggr-6a851-firebase-adminsdk-rbwee-19697363db.json"),
+      FIREBASE_CONFIG = {
+        apiKey: "AIzaSyAJGkHcDPbbLW1pf29xb-uqNc9Ygd39F04",
+        authDomain: "chuggr-6a851.firebaseapp.com",
+        databaseURL: "https://chuggr-6a851.firebaseio.com",
+        projectId: "chuggr-6a851",
+        storageBucket: "chuggr-6a851.appspot.com",
+        messagingSenderId: "1046653963698",
+        appId: "1:1046653963698:web:e26ab6a28553d00f5be8ab",
+        measurementId: "G-5TMDD3N2B2"
+      };
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAJGkHcDPbbLW1pf29xb-uqNc9Ygd39F04",
-  authDomain: "chuggr-6a851.firebaseapp.com",
-  databaseURL: "https://chuggr-6a851.firebaseio.com",
-  projectId: "chuggr-6a851",
-  storageBucket: "chuggr-6a851.appspot.com",
-  messagingSenderId: "1046653963698",
-  appId: "1:1046653963698:web:e26ab6a28553d00f5be8ab",
-  measurementId: "G-5TMDD3N2B2"
-};
-
-firebase.initializeApp(firebaseConfig);
-
-
-const serviceAccount = require("/Users/smithdc/Desktop/MyApp/CHUGGR/chuggr-6a851-firebase-adminsdk-rbwee-19697363db.json");
-
+/// Initialize Firebase
+firebase.initializeApp(FIREBASE_CONFIG);
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+  credential: admin.credential.cert(SERVICE_ACCOUNT),
   databaseURL: "https://chuggr-6a851.firebaseio.com"
 });
 
-
-
-// Set view for EJS templating engine
+/// App Configurations
 app.set('view engine', 'ejs');
-
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
-
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
-// accessible only if user is logged in
 
-// reference for firestore DB
+/// Database Initialization
 const db = admin.firestore();
 
-// Redirect users with authstate listener
+/// Routes
+/// Note: Uses async to retrieve db records
 
+const loadUserDashboardRoute = async function(req, res) {
+  const currentUser = firebase.auth().currentUser.uid;
+  const docs = await db.collection('testBets')
+                     .where('acceptedUsers', 'array-contains', currentUser)
+                     .get();
+  console.log(currentUser) // TODO: replace with logging
+  res.render('dashboard', {
+    docs: docs,
+    currentUser: currentUser
+  });
+};
+
+const loadPendingBetsSnapshot = async function(req, res) {
+  const currentUser = firebase.auth().currentUser.uid;
+  const pendingBets = await db.collection('testBets')
+                            .where('allUsers', 'array-contains', currentUser)
+                            .orderBy('dateOpened', 'desc')
+                            .get();
+  res.render('pendingbets', {
+    currentUser: currentUser,
+    snapshot: pendingBets
+  });
+};
+
+const loadManageBetsRoute = async function(req, res) {
+  const currentUser = firebase.auth().currentUser.uid;
+  const nameRef = firebase.auth().currentUser.firstName;
+  const friendRef = await db.collection('testUsers')
+                          .doc(currentUser)
+                          .collection('friends')
+                          .get();
+  res.render('managebets', {
+    currentUser: currentUser,
+    nameRef: nameRef,
+    friendRef: friendRef
+  });
+};
+
+//  Application Routing
+/// Note: app should only be accessible for logged in users,
+/// otherwise redirect
 firebase.auth().onAuthStateChanged((user) => {
+
   if (!user) {
-    app.get('/', (req, res) => {
-      res.render('landingpage')
-    });
-
-
-  } else {
-    // A user is detected
-
-    app.get('/dashboard', async function(req, res) {
-      // Retrieve data from Firestore
-      // Use async function to fullfill promise
-      const currentUser = firebase.auth().currentUser.uid;
-      const docs = await db.collection('testBets').where('acceptedUsers', 'array-contains', currentUser).get()
-      console.log(currentUser)
-      res.render('dashboard', {
-        docs: docs,
-        currentUser: currentUser
-      });
-    });
-
-    app.get('/pendingbets', async function(req, res) {
-      const currentUser = firebase.auth().currentUser.uid;
-      const pendingBets = db.collection('testBets').where('allUsers', 'array-contains', currentUser).orderBy('dateOpened', 'desc');
-
-      const snapshot = await pendingBets.get();
-
-      res.render('pendingbets', {
-        currentUser: currentUser,
-        snapshot: snapshot
-      });
-    });
-
-    app.get('/managebets', async function(req, res) {
-      const currentUser = firebase.auth().currentUser.uid
-      const nameRef = firebase.auth().currentUser.firstName
-      const friendRef = await db.collection('testUsers').doc(currentUser).collection('friends').get()
-      res.render('managebets', {
-        currentUser: currentUser,
-        nameRef: nameRef,
-        friendRef: friendRef
-      });
-    });
+    // route to landing page when not authenticated
+    app.get('/', (req, res) => { res.render('landingpage') });
+  }
+  else {
+    app.get('/dashboard', loadUserDashboardRoute);
+    app.get('/pendingbets', loadPendingBetsSnapshot);
+    app.get('/managebets', loadManageBetsRoute);
 
     // possible to have listner client side listening for changes?
     app.get('/bets/:betId', async function(req, res) {
