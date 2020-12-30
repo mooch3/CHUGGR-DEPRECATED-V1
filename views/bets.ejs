@@ -16,12 +16,12 @@
       <td style="border-radius: 0 15px 0 0"><%=bet.stake.beers%>🍺 <%= bet.stake.shots%>🥃</td>
     </tr>
     <tr>
-      <td class="participant"><%=bet.team1 + ": "%> <i><%=Object.values(bet.side1Users)%></i> </td>
+      <td class="participant"><%=bet.team1 + ": "%> <i><%=Object.values(bet.side1Users).join(', ')%></i> </td>
       <td>Due Date: <%=dueDate.getDate() + "/" + (dueDate.getMonth()+1) + "/" + dueDate.getFullYear()%> </td>
       <td></td>
     </tr>
     <tr>
-      <td class="participant" style="border-radius: 0 0 0 15px"><%=bet.team2 + ": "%> <i><%=Object.values(bet.side2Users)%></i></td>
+      <td class="participant" style="border-radius: 0 0 0 15px"><%=bet.team2 + ": "%> <i><%=Object.values(bet.side2Users).join(', ')%></i></td>
       <% if(bet.dueDate*1000 < Date.now() && bet.isFinished == false){ %>
       <td style="color: red">Over Due</td>
       <%} else if (bet.isFinished == false){%>

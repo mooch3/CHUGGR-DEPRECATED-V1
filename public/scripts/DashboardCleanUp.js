@@ -6,18 +6,32 @@ cleanBet = function() {
 
     // iterate through each card forEach bet card...
     if (betCard.rows[0].cells[1].innerHTML == "moneyline") {
-      betCard.rows[0].cells[1].innerHTML = "Money Line";
+      let betType = betCard.rows[0].cells[1];
+      betType.innerHTML = "Money Line";
+      betType.style.color = "#ff9933";
 
     } else if (betCard.rows[0].cells[1].innerHTML == "spread") {
-      betCard.rows[0].cells[1].innerHTML = "Spread";
-      betCard.rows[1].cells[0].innerHTML = betCard.rows[1].cells[0].innerHTML.replace("undefined: ", "Over: ");
-      betCard.rows[2].cells[0].innerHTML = betCard.rows[2].cells[0].innerHTML.replace("undefined: ", "Under: ");
+      let betType = betCard.rows[0].cells[1];
+      let team1 = betCard.rows[1].cells[0];
+      let team2 = betCard.rows[2].cells[0];
+      betType.innerHTML = "Spread";
+      betType.style.color = "#ff9933"
+      team1.style.color = "green";
+      team2.style.color = "red";
+      team1.innerHTML = betCard.rows[1].cells[0].innerHTML.replace("undefined: ", "Over: ");
+      team2.innerHTML = betCard.rows[2].cells[0].innerHTML.replace("undefined: ", "Under: ");
 
 
     } else if (betCard.rows[0].cells[1].innerHTML == "event") {
-      betCard.rows[0].cells[1].innerHTML = "Event";
-      betCard.rows[1].cells[0].innerHTML = betCard.rows[1].cells[0].innerHTML.replace("undefined: ", "For: ");
-      betCard.rows[2].cells[0].innerHTML = betCard.rows[2].cells[0].innerHTML.replace("undefined: ", "Against: ");
+      let betType = betCard.rows[0].cells[1];
+      let team1 = betCard.rows[1].cells[0];
+      let team2 = betCard.rows[2].cells[0];
+      betType.innerHTML = "Event";
+      betType.style.color = "#ff9933"
+      team1.style.color = "green";
+      team2.style.color = "red"
+      team1.innerHTML = betCard.rows[1].cells[0].innerHTML.replace("undefined: ", "For: ");
+      team2.innerHTML = betCard.rows[2].cells[0].innerHTML.replace("undefined: ", "Against: ");
 
     }
 

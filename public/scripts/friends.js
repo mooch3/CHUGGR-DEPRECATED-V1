@@ -109,7 +109,7 @@ function addFriendFunc(friendObjects) {
 };
 
 
-// auto complete function takes an element and array
+// auto complete function finds friends based off of the letters in the value box
 function autocomplete(inp, arr) {
 
   var currentFocus;

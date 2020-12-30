@@ -5,7 +5,7 @@
 
 <h1>My Bets</h1>
 
-
+<input type="hidden" id="currentUser" value=<%=currentUser%>>
   <% docs.forEach(item => { %>
     <div>
     <table class="bet-card">
@@ -29,7 +29,7 @@
       <%} else if (item.data().isFinished == true && item.data().outstandingUsers.includes(currentUser)){%>
         <td style="color: #ff9933">You Owe Drinks</td>
       <%} else if (item.data().isFinished == true && !item.data().outstandingUsers.includes(currentUser)){%>
-        <td style="color: #151E3F">Closed</td>
+        <td style="color: #005A9C">Closed</td>
       <%};%>
 
       <td style="border-radius: 0 0 15px 0"><a href="/bets/<%=item.data().betID%>" style="color: #983728">Details > </a></td>

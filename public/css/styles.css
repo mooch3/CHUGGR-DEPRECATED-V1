@@ -680,21 +680,20 @@ ul {
   overflow: auto;
 }
 .friend-card {
-  width: 50%;
+  width: 90%;
   display: inline-block;
   height: 40px;
-  border: 6px;
-  border: 1px solid black;
   border-radius: 6px;
-  background-color: #E0E2DB;
   font-size: 2rem;
   min-width: 70px;
   overflow: auto;
-
 }
-
+.profile-pic{
+  height: 80%;
+  width: 5%;
+}
 .friend-card label {
-  color: #151E3F;
+  color: #E0E2DB;
 }
 input [type=checkbox] {
   margin: 4px;
@@ -711,9 +710,6 @@ input [type=checkbox] {
   margin: 20px 0 20px 0;
 }
 
-.friend-card input:checked ~ .friend-select{
-  background-color: #ff9933;
-}
 
 .pending-bets {
   background-color: #983728;

@@ -51,6 +51,7 @@
   <div class="friend-list">
     <% friendRef.forEach(friend => { %>
       <div class="friend-card">
+        <img class="profile-pic" src="images/CHUGGRLogo.png" alt="">
         <label for="friend"><%=friend.data().firstName%> <%=friend.data().lastName%> (<%=friend.data().userName%>)</label>
         <input type="checkbox" class="friend-select" value="<%=friend.data().uid%> <%=friend.data().firstName%>">
       </div>

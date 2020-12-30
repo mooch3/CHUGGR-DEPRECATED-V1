@@ -1,28 +1,25 @@
-// const currentUser = document.getElementById('currentUser').value;
-// const betID = document.getElementById('betID').value;
 const betRef = firestore.collection('testBets').doc(betID);
 const fieldValue = firebase.firestore.FieldValue;
-
-
 const closeBetButton = document.getElementById('closeBetButton');
 const oustandingBetButton = document.getElementById('outstandingBetButton');
 
 
 betRef.get().then((doc) => {
-  if (!oustandingBetButton){
-  console.log(doc.data());
-  closeBetButton.addEventListener('click', (e) => {
-  const side1 = document.getElementById('side1UsersSelect');
-  const side2 = document.getElementById('side2UsersSelect');
-  closeBet(doc, side1, side2);
-  });
-} else {
-  outstandingBetButton.addEventListener('click', (e) => {
-    const outstanding = document.getElementById('outstandingBtnSelect');
-    moveOutOfOutstanding();
-    console.log('User moved out of oustanding.');
-  })
-};
+  if (closeBetButton != null) {
+    console.log(doc.data());
+    closeBetButton.addEventListener('click', (e) => {
+      const side1 = document.getElementById('side1UsersSelect');
+      const side2 = document.getElementById('side2UsersSelect');
+      closeBet(doc, side1, side2);
+    });
+  } else if (oustandingBetButton != null) {
+    outstandingBetButton.addEventListener('click', (e) => {
+      const outstanding = document.getElementById('outstandingBtnSelect');
+      moveOutOfOutstanding();
+      decrementOutstanding(doc)
+      console.log('User moved out of oustanding.');
+    });
+  };
 });
 
 function closeBet(doc, side1, side2) {
@@ -59,14 +56,14 @@ function closeBet(doc, side1, side2) {
 
 
   }
-removeInvitedUsers();
-finished();
+  removeInvitedUsers();
+  finished();
 
-setTimeout(() => {
-  location.reload();
-}, 700);
+  setTimeout(() => {
+    location.reload();
+  }, 700);
 
-console.log('bet closed successfully');
+  console.log('bet closed successfully');
 };
 
 function incrementWinners(winner, beers, shots) {
@@ -90,41 +87,65 @@ function incrementLosers(loser, beers, shots) {
 function moveToOutStanding(loser) {
   betRef.set({
     outstandingUsers: fieldValue.arrayUnion(loser)
-  }, {merge:true})
+  }, {
+    merge: true
+  })
 };
 
 function finished() {
   betRef.set({
     isFinished: true,
-    dateFinished: Date.now()/1000
-  }, {merge:true})
+    dateFinished: Date.now() / 1000
+  }, {
+    merge: true
+  })
 };
 
-function removeInvitedUsers(){
+function removeInvitedUsers() {
   betRef.set({
     invitedUsers: {}
-  },{merge:true})
+  }, {
+    merge: true
+  })
 }
 
-function side1Winners(){
+function side1Winners() {
   betRef.set({
     winner: 'one'
-  },{merge:true})
+  }, {
+    merge: true
+  })
 }
 
-function side2Winners(){
+function side2Winners() {
   betRef.set({
     winner: 'two'
-  },{merge:true})
+  }, {
+    merge: true
+  })
 }
 
-function moveOutOfOutstanding(){
+function moveOutOfOutstanding() {
   betRef.set({
     outstandingUsers: fieldValue.arrayRemove(currentUser),
-  }, {merge:true});
-  
+  }, {
+    merge: true
+  });
+
   setTimeout(() => {
     location.reload();
   }, 700);
 
+}
+
+function decrementOutstanding(doc) {
+  const beers = doc.data().stake.beers;
+  const shots = doc.data().stake.shots;
+  const userRef = firestore.collection('testUsers').doc(currentUser);
+  userRef.set({
+    "drinksOutstanding.beers": fieldValue.increment(beers * -1),
+    "drinksOutstanding.shots": fieldValue.increment(shots * -1)
+  }, {
+    merge: true
+  });
 }

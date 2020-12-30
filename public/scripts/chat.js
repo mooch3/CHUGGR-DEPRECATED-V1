@@ -19,7 +19,6 @@ const firebaseConfig = {
 
   const currentUser = document.getElementById('currentUser').value;
   const userRef = firestore.collection('testUsers').doc(currentUser)
-
   const betID = document.getElementById('betID').value;
   const chatRef = firestore.collection('testChatRooms').doc(betID)
   const send = document.getElementById('sendMessage')

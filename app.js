@@ -201,7 +201,7 @@ app.post('/createAccount', (req, res) => {
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
         // User is signed in.
-        res.redirect('dashboard');
+        res.redirect('/SignIn');
       } else {
         console.log('No user')
         res.redirect('landingpage')
