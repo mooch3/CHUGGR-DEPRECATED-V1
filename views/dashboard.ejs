@@ -17,7 +17,7 @@
     <tr>
       <td class="participant"><%=item.data().team1 + ": "%> <i><%=Object.values(item.data().side1Users).join(', ')%></i> </td>
       <% const dueDate = new Date(item.data().dueDate*1000)%>
-      <td>Due Date: <%=dueDate.getDate() + "/" + (dueDate.getMonth()+1) + "/" + dueDate.getFullYear()%> </td>
+      <td>Due Date: <%=(dueDate.getMonth()+1) + "/" + dueDate.getDate() + "/" + dueDate.getFullYear()%> </td>
       <td></td>
     </tr>
     <tr>

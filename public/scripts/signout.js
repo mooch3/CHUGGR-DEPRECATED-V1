@@ -8,7 +8,7 @@ signOutBtn.addEventListener('click', (e) => {
 
 function signout() {
   firebase.auth().signOut().then(function() {
-  // Sign-out successful.
+  window.location = '/signout'
   console.log('No user');
 }).catch(function(error) {
   // An error happened.

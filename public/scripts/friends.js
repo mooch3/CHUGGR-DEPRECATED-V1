@@ -48,7 +48,7 @@ usersRef.onSnapshot((allUsers) => {
     });
 // potential friends are collected into the array filter this array by the input value
 console.log(potentialFriends);
-console.log(friendObjects)
+console.log(friendObjects);
 // auto complete all friend possibilities
 autocomplete(findFriends, potentialFriends);
 addFriendFunc(friendObjects);

@@ -42,33 +42,39 @@ app.use(express.static('public'));
 // reference for firestore DB
 const db = admin.firestore();
 
-// Redirect users with authstate listener
 
-firebase.auth().onAuthStateChanged((user) => {
-  if (!user) {
     app.get('/', (req, res) => {
       res.render('landingpage')
     });
 
+// Global variables are bad practice, research a way to replace your current
+// sign-in flow
+var currentUser;
 
-  } else {
-    // A user is detected
 
     app.get('/dashboard', async function(req, res) {
       // Retrieve data from Firestore
       // Use async function to fullfill promise
-      const currentUser = firebase.auth().currentUser.uid;
+      if (currentUser == undefined){
+        res.redirect('/signin')
+      } else {
       const docs = await db.collection('testBets').where('acceptedUsers', 'array-contains', currentUser).get()
       console.log(currentUser)
       res.render('dashboard', {
         docs: docs,
         currentUser: currentUser
       });
+    };
     });
 
     app.get('/pendingbets', async function(req, res) {
-      const currentUser = firebase.auth().currentUser.uid;
-      const pendingBets = db.collection('testBets').where('allUsers', 'array-contains', currentUser).orderBy('dateOpened', 'desc');
+
+      if (currentUser == undefined){
+        res.redirect('/signin')
+      } else {
+      const pendingBets = db.collection('testBets')
+                            .where('allUsers', 'array-contains', currentUser)
+                            .orderBy('dateOpened', 'desc');
 
       const snapshot = await pendingBets.get();
 
@@ -76,63 +82,66 @@ firebase.auth().onAuthStateChanged((user) => {
         currentUser: currentUser,
         snapshot: snapshot
       });
+    };
     });
 
     app.get('/managebets', async function(req, res) {
-      const currentUser = firebase.auth().currentUser.uid
-      const nameRef = firebase.auth().currentUser.firstName
-      const friendRef = await db.collection('testUsers').doc(currentUser).collection('friends').get()
+      if (currentUser == undefined){
+        res.redirect('/signin')
+      } else {
+      const nameRef = await db.collection('testUsers').doc(currentUser)
+      const friendRef = await db.collection('testUsers').doc(currentUser)
+                                .collection('friends')
+                                .get();
       res.render('managebets', {
         currentUser: currentUser,
-        nameRef: nameRef,
+        nameRef: nameRef.firstName,
         friendRef: friendRef
       });
+    }
     });
 
-    // possible to have listner client side listening for changes?
     app.get('/bets/:betId', async function(req, res) {
-      // TODO: Create dynamic page for each page
+      if (currentUser == undefined){
+        res.redirect('/signin')
+      } else {
+
       const requestedBet = req.params.betId;
-      const currentUser = firebase.auth().currentUser.uid;
       const bet = await db.collection('testBets').doc(requestedBet).get();
-      const chatRef = await db.collection('testChatRooms').doc('chatTest').collection('actualMessages').get()
-      console.log(bet.data())
+      const chatRef = await db.collection('testChatRooms')
+                              .doc('chatTest')
+                              .collection('actualMessages')
+                              .get()
         res.render('bets', {
           bet: bet.data(),
           chatRef: chatRef,
           currentUser: currentUser,
           betID: requestedBet
         });
-
-
-
+      }
       });
 
     // Get user profile
     app.get('/profile', async function(req, res) {
-      const currentUser = firebase.auth().currentUser.uid;
-      // possible to use a listener client side to reduce reads?
-      const currentUserProfile = await db.collection('testUsers').where('uid', '==', currentUser).get()
-
-
+      if (currentUser == undefined){
+        res.redirect('/signin')
+      } else {
+      const currentUserProfile = await db.collection('testUsers')
+                                         .where('uid', '==', currentUser)
+                                         .get()
       res.render('profile', {
         currentUserProfile: currentUserProfile
       });
+    }
     });
 
     // Sign out of the application
     app.get('/signout', (req, res) => {
       res.render('signout')
     });
-  };
-});
-
-
-
 
 // Render bet pages dynamically
 
-// Accessible when user is not logged in
 app.get('/', (req, res) => {
   res.render('landingpage')
 });
@@ -146,11 +155,12 @@ app.get('/signin', (req, res) => {
 });
 
 app.get('/friends', (req, res) => {
-  const currentUser = firebase.auth().currentUser.uid
+  // const currentUser = firebase.auth().currentUser.uid
   res.render('friends', {
     currentUser: currentUser
   })
 });
+
 
 // Create a new account with CHUGGR
 // UID is automatically created and can be tapped into through firebase
@@ -225,30 +235,27 @@ app.post('/pendingbets', async function(req, res){
 // TODO: add a friend to your friends list
 app.post('/friends', async function(req, res) {
 
-
-
 });
 // Sign Users In https request
-app.post('/SignIn', function(req, res) {
-  let email = req.body.inputEmail;
-  let password = req.body.inputPassword;
+app.post('/SignIn', async function(req, res) {
+  const authToken = await req.get('authToken');
 
-  firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
+  if (authToken != null){
+  admin
+  .auth()
+  .verifyIdToken(authToken)
+  .then((decodedToken) => {
+    currentUser = decodedToken.uid;
+    console.log(decodedToken);
+  })
+  .then((currentUser) => {
+    res.redirect('dashboard')
+  })
+  .catch((error) => {
+    // Handle error
   });
-
-  firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-      // user is signed in
-      console.log(firebase.auth().currentUser)
-      res.redirect('dashboard');
-    }
+};
   });
-
-
-});
 
 // Sign out throwing http error "header sent" when you log out and log back in
 app.post('/signout', async function (req, res) {

@@ -10,8 +10,8 @@ const firebaseConfig = {
   };
   firebase.initializeApp(firebaseConfig);
 
-  let firestore = firebase.firestore();
-
+  const firestore = firebase.firestore();
+  const auth = firebase.auth();
   const btnSignin = document.getElementById('SignIn');
   const inputEmail = document.getElementById('inputEmail');
   const inputPassword = document.getElementById('inputPassword');
@@ -19,16 +19,28 @@ const firebaseConfig = {
   btnSignin.addEventListener('click', (e) => {
     const email = inputEmail.value;
     const pass = inputPassword.value;
-    const auth = firebase.auth();
 
     auth.signInWithEmailAndPassword(email, pass).catch(err => console.log(err));
 
   });
 
   firebase.auth().onAuthStateChanged(user => {
-    if (user){
-      console.log(user)
-      btnSignin.style.display = "none";
+    console.log(user)
+    if (user!=null){
+      auth.currentUser.getIdToken(true).then((idToken) => {
+        let xhr = new XMLHttpRequest();
+
+        xhr.open('POST', '/SignIn', true);
+        xhr.setRequestHeader('authToken', idToken);
+        xhr.send()
+        xhr.onreadystatechange = function() { // listen for state changes
+          if (xhr.readyState == 4 && xhr.status == 200) { // when completed we can move away
+            window.location = "/dashboard";
+  }
+}
+      }).catch((error) => {
+        console.log(error);
+      });
     } else {
       console.log('Not logged in.')
     }
