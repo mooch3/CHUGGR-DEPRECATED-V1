@@ -89,7 +89,8 @@ var currentUser;
       if (currentUser == undefined){
         res.redirect('/signin')
       } else {
-      const nameRef = await db.collection('testUsers').doc(currentUser)
+      const nameRef = await db.collection('testUsers')
+                              .doc(currentUser)
       const friendRef = await db.collection('testUsers').doc(currentUser)
                                 .collection('friends')
                                 .get();
@@ -107,7 +108,9 @@ var currentUser;
       } else {
 
       const requestedBet = req.params.betId;
-      const bet = await db.collection('testBets').doc(requestedBet).get();
+      const bet = await db.collection('testBets')
+                          .doc(requestedBet)
+                          .get();
       const chatRef = await db.collection('testChatRooms')
                               .doc('chatTest')
                               .collection('actualMessages')
@@ -120,17 +123,28 @@ var currentUser;
         });
       }
       });
+    // get this users profile
+    app.get('/profile', async function (req,res) {
+      const requestedProfile = currentUser;
+      const userProfile = await db.collection('testUsers')
+                                  .where('uid', '==', requestedProfile)
+                                  .get();
+      res.render('profile', {
+        userProfile: userProfile
+      });
+    });
 
-    // Get user profile
-    app.get('/profile', async function(req, res) {
+    // Get any user profile
+    app.get('/profile/:userUID', async function(req, res) {
       if (currentUser == undefined){
         res.redirect('/signin')
       } else {
-      const currentUserProfile = await db.collection('testUsers')
-                                         .where('uid', '==', currentUser)
-                                         .get()
+      const requestedProfile = req.params.userUID;
+      const userProfile = await db.collection('testUsers')
+                                         .where('uid', '==', requestedProfile)
+                                         .get();
       res.render('profile', {
-        currentUserProfile: currentUserProfile
+        userProfile: userProfile,
       });
     }
     });
@@ -154,9 +168,14 @@ app.get('/signin', (req, res) => {
   res.render('signin')
 });
 
-app.get('/friends', (req, res) => {
-  // const currentUser = firebase.auth().currentUser.uid
+app.get('/friends', async function (req, res) {
+const friendsList = await db.collection('testUsers')
+                      .doc(currentUser)
+                      .collection('friends')
+                      .get();
+console.log(friendsList)
   res.render('friends', {
+    friendsList:friendsList,
     currentUser: currentUser
   })
 });

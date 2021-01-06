@@ -33,8 +33,10 @@ const firebaseConfig = {
         xhr.open('POST', '/SignIn', true);
         xhr.setRequestHeader('authToken', idToken);
         xhr.send()
-        xhr.onreadystatechange = function() { // listen for state changes
-          if (xhr.readyState == 4 && xhr.status == 200) { // when completed we can move away
+        xhr.onreadystatechange = function() {
+          // listen for state changes
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            // when completed we can move to the dashboard
             window.location = "/dashboard";
   }
 }

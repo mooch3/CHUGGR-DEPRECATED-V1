@@ -1,14 +1,11 @@
 <%- include('partials/header'); -%>
 
-<% currentUserProfile.forEach(doc => { %>
-
-<div class="">
-
-
+<% userProfile.forEach(doc => { %>
+<div>
   <table class="profile-data">
     <tr>
       <th style="border-radius: 15px 0 0 0;">
-        <img id="placeholder" src="images/CHUGGRLogo.png" alt="">
+        <img id="placeholder" src="/images/CHUGGRLogo.png" alt="">
       </th>
 
       <th>Following <strong><%=doc.data().numFriends%></strong> Friends </th>
@@ -26,7 +23,7 @@
     </tr>
     <tr>
       <td>
-        <h2 style="color: gray; font-size: 1.5rem"> <%= doc.data().firstName %> <%=doc.data().lastName%> </h2>
+        <h2 style="color: gray; font-size: 3rem"> <%= doc.data().firstName %> <%=doc.data().lastName%> </h2>
       </td>
       <td><%=doc.data().betsWon%> Bets Won</td>
       <td><%=doc.data().drinksOutstanding.beers%>🍺<%=doc.data().drinksOutstanding.shots%> Outstanding</td>

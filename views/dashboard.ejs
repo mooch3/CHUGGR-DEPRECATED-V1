@@ -12,7 +12,7 @@
     <tr>
       <td style="border-radius: 15px 0 0 0"><strong><%= item.data().title%></strong> </td>
       <td><%=item.data().type%></td>
-      <td style="border-radius: 0 15px 0 0"><%=item.data().stake.beers%>🍺 <%= item.data().stake.shots%>🥃</td>
+      <td style="border-radius: 0 15px 0 0">Stake: <%=item.data().stake.beers%>🍺 <%= item.data().stake.shots%>🥃</td>
     </tr>
     <tr>
       <td class="participant"><%=item.data().team1 + ": "%> <i><%=Object.values(item.data().side1Users).join(', ')%></i> </td>

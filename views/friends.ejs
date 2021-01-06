@@ -1,5 +1,5 @@
 <%- include('partials/header'); -%>
-<h3>Find Friends to Follow</h3>
+<h1 class="friends-header">Find Friends to Follow</h1>
 <div id="friendSuccess" class="hidden-div"><p>You followed a new chuggr!</p></div>
 <div id="friendFail" class="hidden-div"> <p>You are already chuggin' with this person.</p></div>
 <div id="noResult" class="hidden-div"> <p>We couldn't find this chuggr.</p></div>
@@ -12,10 +12,21 @@
   <input type="hidden" name="me" value=<%=currentUser%>>
 </form>
 
-<h1>Friends List</h1>
-<div class="friends-list">
-
-
+<h1 class="friends-header">Your Friends</h1>
+<div class="friends-grid">
+  <%friendsList.forEach(friend => {%>
+    <div>
+      <img class="friends-grid-pic" src="images/CHUGGRLogo.png" alt="">
+      <br>
+      <%=friend.data().userName%>
+      <br>
+      <br>
+      <%=friend.data().firstName%> <%=friend.data().lastName%>
+      <br>
+      <br>
+      <strong><a href="/profile/<%=friend.data().uid%>">View Profile ></a></strong>
+    </div>
+  <%});%>
 </div>
 <script src="scripts/friends.js">
 

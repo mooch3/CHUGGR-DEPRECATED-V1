@@ -197,6 +197,7 @@ input[type=submit] {
     background-color: #ff9933;
     overflow: hidden;
     color: #E0E2DB;
+    height: 75px;
   }
 
 .hidden-div {
@@ -210,18 +211,18 @@ input[type=submit] {
     /* padding-right: 140px; */
   }
 #logo {
-  font-size: 3.5rem;
+  font-size: 5rem;
   font-family: Tondu, sans-serif;
   position: absolute;
   left: 5%;
-  padding-bottom: 3%;
-  padding-top: 1%;
+  top: -1%;
+  margin: 15px;
 }
   /* Style the links inside the navigation bar */
   .topnav a {
     display: inline-block;
     float: right;
-    padding: 14px 16px;
+    margin: 25px 16px;
     text-decoration: none;
     font-size: 17px;
     font-family: inherit;
@@ -330,7 +331,6 @@ input[type=submit] {
 
 .profile-data {
   display: inline-block;
-  width: 90%;
   background-color: #E0E2DB;
   margin: 60px 0 60px 0;
   border-radius: 15px;
@@ -761,4 +761,29 @@ width: 25px;
 .close-bet label {
   font-size: 2rem;
   margin-left: 20px;
+}
+
+/* Friends page */
+.friends-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 1rem;
+  align-content: space-around;
+  margin: 75px 150px;
+}
+
+.friends-grid div {
+  padding: 1.5rem;
+  border-radius: 1rem;
+  background: #E0E2DB;
+  height: 250px;
+  color: #151E3F;
+}
+
+.friends-grid-pic {
+  height: 60%;
+}
+
+.friends-header {
+  margin: 5rem 0 0 0;
 }
