@@ -3,10 +3,11 @@
 
 </div>
 
-<h1>My Bets</h1>
+<h1>Current Bets</h1>
 
 <input type="hidden" id="currentUser" value=<%=currentUser%>>
   <% docs.forEach(item => { %>
+    <%if (!item.data().isFinished){%>
     <div>
     <table class="bet-card">
     <tr>
@@ -37,8 +38,11 @@
   </table>
 
   </div>
+  <%};%>
 <%});%>
-<script src="scripts/pendingBetsNotif.js"></script>
-<script src="scripts/DashboardCleanUp.js"></script>
+<script src="/scripts/firebasehelper.js"></script>
+<script src="/scripts/pendingBetsNotif.js"></script>
+<script src="/scripts/DashboardCleanUp.js"></script>
+
 
 <%-include('partials/footer'); -%>

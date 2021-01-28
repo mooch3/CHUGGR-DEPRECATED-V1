@@ -1,9 +1,4 @@
 const firestore = firebase.firestore();
-
-
-
-
-
 const addFriend = document.getElementById('addFriend');
 const friendForm = document.getElementById('friendForm');
 const findFriends = document.getElementById('findFriends')

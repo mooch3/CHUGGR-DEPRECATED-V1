@@ -1,5 +1,3 @@
-firebase.initializeApp(firebaseConfig);
-
 const firestore = firebase.firestore();
 const fieldValue = firebase.firestore.FieldValue;
 

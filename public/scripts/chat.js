@@ -1,16 +1,4 @@
-const firebaseConfig = {
-    apiKey: "AIzaSyAJGkHcDPbbLW1pf29xb-uqNc9Ygd39F04",
-    authDomain: "chuggr-6a851.firebaseapp.com",
-    databaseURL: "https://chuggr-6a851.firebaseio.com",
-    projectId: "chuggr-6a851",
-    storageBucket: "chuggr-6a851.appspot.com",
-    messagingSenderId: "1046653963698",
-    appId: "1:1046653963698:web:e26ab6a28553d00f5be8ab",
-    measurementId: "G-5TMDD3N2B2"
-  };
-  firebase.initializeApp(firebaseConfig);
-
-  let firestore = firebase.firestore()
+  let firestore = firebase.firestore();
 
   // retrieve latest messages from firestore and order by time stamp
 
@@ -20,19 +8,18 @@ const firebaseConfig = {
   const currentUser = document.getElementById('currentUser').value;
   const userRef = firestore.collection('testUsers').doc(currentUser)
   const betID = document.getElementById('betID').value;
-  const chatRef = firestore.collection('testChatRooms').doc(betID)
-  const send = document.getElementById('sendMessage')
-
+  const chatRef = firestore.collection('testChatRooms').doc(betID);
+  const send = document.getElementById('sendMessage');
 
   send.addEventListener('click', (e) => {
+
     const input = document.getElementById('chatValue').value;
+
     userRef.get().then((doc) => {
-
-
       const message = {
         body: input,
         timestamp: Date.now(),
-        sender: doc.data().userName,
+        userName: doc.data().userName,
         uid: doc.data().uid
       };
 
@@ -41,8 +28,6 @@ const firebaseConfig = {
     });
     document.getElementById('chatValue').value = '';
   });
-
-
 
   function sendMessage(message) {
     // TODO: do I want to send messages from client side or back end?
@@ -57,7 +42,10 @@ const firebaseConfig = {
   };
     // TODO: I just changed the app UI but I have not updated the javascript code for rendering
   getRealtimeChat = function() {
-      const orderChat = firestore.collection('testChatRooms').doc(betID).collection('actualMessages').orderBy('timestamp')
+      const orderChat = firestore.collection('testChatRooms')
+                                 .doc(betID)
+                                 .collection('actualMessages')
+                                 .orderBy('timestamp');
 
       orderChat.onSnapshot((snapshot) => {
 
@@ -76,19 +64,15 @@ const firebaseConfig = {
             sender.className = 'message-sender';
             let node = document.createTextNode(change.doc.data().body);
 
-
-
             if (change.doc.data().uid == currentUser){
 
               chatMessageContainer.appendChild(firstDiv);
               firstDiv.appendChild(secondDiv);
               secondDiv.appendChild(node);
-
-
             }
             else {
 
-            let senderNode = document.createTextNode(change.doc.data().sender);
+            let senderNode = document.createTextNode(change.doc.data().userName);
 
             chatMessageContainer.appendChild(firstDiv);
             firstDiv.appendChild(sender);
@@ -96,14 +80,9 @@ const firebaseConfig = {
             secondDiv.classList.add('message-partner');
             firstDiv.appendChild(secondDiv);
             secondDiv.appendChild(node)
-
-
             };
           };
-
         });
-
-
     });
 
     };

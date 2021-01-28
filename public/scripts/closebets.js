@@ -69,7 +69,7 @@ function closeBet(doc, side1, side2) {
 function incrementWinners(winner, beers, shots) {
   firestore.collection('testUsers').doc(winner).update({
     "drinksGiven.beers": fieldValue.increment(beers),
-    "drinksGivenshots": fieldValue.increment(shots),
+    "drinksGiven.shots": fieldValue.increment(shots),
     betsWon: fieldValue.increment(1)
   });
 };
@@ -142,7 +142,7 @@ function decrementOutstanding(doc) {
   const beers = doc.data().stake.beers;
   const shots = doc.data().stake.shots;
   const userRef = firestore.collection('testUsers').doc(currentUser);
-  userRef.set({
+  userRef.update({
     "drinksOutstanding.beers": fieldValue.increment(beers * -1),
     "drinksOutstanding.shots": fieldValue.increment(shots * -1)
   }, {
