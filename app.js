@@ -5,7 +5,6 @@ const ejs = require('ejs');
 const admin = require('firebase-admin');
 const firebase = require('firebase');
 const app = express();
-const userControllers = require('./controllers/userControllers')
 const SERVICE_ACCOUNT = require(process.env.FIREBASE_SERVICE_ACCOUNT)
 
 admin.initializeApp({
