@@ -5,8 +5,6 @@
   <% snapshot.forEach((doc) => { %>
     <% let invitedUsers = doc.data().invitedUsers;%>
   <%  if (invitedUsers.hasOwnProperty(currentUser) == true) {%>
-
-
       <form class="betForm" action="/pendingbets" method="post">
       <table class="bet-card" style="width: 60%">
       <tr>
@@ -28,15 +26,10 @@
       <input type="hidden" name="betID" value=<%=doc.data().betID%>>
     </table>
     </form>
-
   <%  };%>
-
-
-
   <% }); %>
 
 </div>
-
-
-<script src="scripts/pendingbets.js"></script>
+<script src="/scripts/firebasehelper.js"></script>
+<script src="/scripts/pendingbets.js"></script>
 <%- include('partials/footer') -%>

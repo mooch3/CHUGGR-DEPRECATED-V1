@@ -1,18 +1,4 @@
-const firebaseConfig = {
-  apiKey: "AIzaSyAJGkHcDPbbLW1pf29xb-uqNc9Ygd39F04",
-  authDomain: "chuggr-6a851.firebaseapp.com",
-  databaseURL: "https://chuggr-6a851.firebaseio.com",
-  projectId: "chuggr-6a851",
-  storageBucket: "chuggr-6a851.appspot.com",
-  messagingSenderId: "1046653963698",
-  appId: "1:1046653963698:web:e26ab6a28553d00f5be8ab",
-  measurementId: "G-5TMDD3N2B2"
-};
-firebase.initializeApp(firebaseConfig);
-
-let firestore = firebase.firestore();
-
-
+const firestore = firebase.firestore();
 // reference to each bet form: Money Line, Spread, Event
 const formMoneyLine = document.getElementById('money-line-form')
 const formSpread = document.getElementById('spread-form');
@@ -51,7 +37,6 @@ function allBetUsers(allUsersArr) {
 
 };
 
-
 // create a moneyline bet
 formMoneyLine.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -87,7 +72,7 @@ formMoneyLine.addEventListener('submit', (e) => {
           shots: parseInt(formMoneyLine.shots.value)
         },
         side1Users: {
-          [currentUser]: doc.data().firstName,
+          [currentUser]: doc.data().userName,
         },
         side2Users: {},
         type: "moneyline",
@@ -118,7 +103,7 @@ formMoneyLine.addEventListener('submit', (e) => {
         },
         side1Users: {},
         side2Users: {
-          [currentUser]: doc.data().firstName,
+          [currentUser]: doc.data().userName,
         },
         type: "moneyline",
         isFinished: false,
@@ -164,7 +149,7 @@ formSpread.addEventListener('submit', (e) => {
         allUsers: allUsersArr,
         invitedUsers: selectedFriends,
         side1Users: {
-          [currentUser]: doc.data().firstName
+          [currentUser]: doc.data().userName,
         },
         side2Users: {},
         title: formSpread.title.value,
@@ -197,7 +182,7 @@ formSpread.addEventListener('submit', (e) => {
         invitedUsers: selectedFriends,
         side1Users: {},
         side2Users: {
-          [currentUser]: doc.data().firstName
+          [currentUser]: doc.data().userName,
         },
         title: formSpread.title.value,
         outstandingUsers: [],
@@ -248,7 +233,7 @@ formEvent.addEventListener('submit', (e) => {
         allUsers: allUsersArr,
         invitedUsers: selectedFriends,
         side1Users: {
-          [currentUser]: doc.data().firstName
+          [currentUser]: doc.data().userName
         },
         side2Users: {},
         stake: {
@@ -277,7 +262,7 @@ formEvent.addEventListener('submit', (e) => {
         invitedUsers: selectedFriends,
         side1Users: {},
         side2Users: {
-          [currentUser]: doc.data().firstName
+          [currentUser]: doc.data().userName,
         },
         stake: {
           beers: parseInt(formEvent.beers.value),

@@ -6,49 +6,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <title>CHUGGR Sign In</title>
-
   <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/sign-in/">
-
   <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-  <!-- Custom styles for this template -->
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Sansita+Swashed:wght@600&display=swap" rel="stylesheet">
   <link href="css/signin.css" rel="stylesheet">
   <!-- The core Firebase JS SDK is always required and must be listed first -->
-  <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-app.js"></script>
-
-  <!-- TODO: Add SDKs for Firebase products that you want to use
-       https://firebase.google.com/docs/web/setup#available-libraries -->
-  <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-analytics.js"></script>
-
-
 </head>
 
 <body class="text-center">
-  <form method="post" action="/createAccount" class="form-signin">
+  <form method="post" action="/SignIn" class="form-signin">
     <img class="logo" src="images/CHUGGRLogo.png" alt="" width="72" height="72">
     <h1 class="h3 mb-3 font-weight-normal">Create Account</h1>
     <label for="firstUserName" class="sr-only">First Name</label>
-    <input type="text" name="firstUserName" class="form-control" placeholder="First Name" required>
+    <input id="firstName"type="text" name="firstUserName" class="form-control" placeholder="First Name" required>
     <label for="lastUserName" class="sr-only">Last Name</label>
-    <input type="text" name="lastUserName" class="form-control" placeholder="Last Name" required>
+    <input id="lastName" type="text" name="lastUserName" class="form-control" placeholder="Last Name" required>
     <label for="inputEmail" class="sr-only">Email address</label>
-    <input type="email" name="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+    <input id="email" type="email" name="inputEmail" class="form-control" placeholder="Email address" required autofocus>
     <label for="userName" class="sr-only">User Name</label>
-    <input type="text" name="userName" class="form-control" placeholder="User Name" required>
+    <input id="userName" type="text" name="userName" class="form-control" placeholder="User Name" required>
     <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" name="inputPassword" class="form-control" placeholder="Password" required>
+    <input id="password" type="password" name="inputPassword" class="form-control" placeholder="Password" required>
     <label for="bio" class="sr-only">Write a Short Bio!</label>
     <br>
     <h2>Write a Short Bio</h2>
-    <textarea name="bio" rows="3" cols="30"></textarea>
-    <div class="checkbox mb-3">
-    </div>
-    <button id="SignIn" class="btn btn-warning" type="submit">Create Account</button>
+    <textarea id="bio" name="bio" rows="3" cols="30"></textarea>
+    <button id="createAccountBtn" class="btn btn-warning" type="button">Create Account</button>
     <p class="mt-5 mb-3 text-muted">&copy; CHUGGR 2020</p>
   </form>
-
-
 </body>
-
+<script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-firestore.js"></script>
+<script src="/scripts/firebasehelper.js"></script>
+<script src="/scripts/createAccount.js"></script>
 </html>

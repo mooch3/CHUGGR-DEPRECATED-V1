@@ -21,7 +21,7 @@ cleanBet = function() {
       betType.innerHTML = "Event";
       betType.style.color = "#ff9933"
       team1.style.color = "green";
-      team2.style.color = "red"
+      team2.style.color = "red";
       team1.innerHTML = betCard.rows[1].cells[0].innerHTML.replace("undefined: ", "For: ");
       team2.innerHTML = betCard.rows[2].cells[0].innerHTML.replace("undefined: ", "Against: ");
     }
