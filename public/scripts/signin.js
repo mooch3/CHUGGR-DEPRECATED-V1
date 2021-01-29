@@ -11,11 +11,10 @@
   });
 
   firebase.auth().onAuthStateChanged(user => {
-    console.log(user)
     if (user != null) {
+      console.log(user);
       firebase.auth().currentUser.getIdToken(true).then((idToken) => {
         const xhr = new XMLHttpRequest();
-
         xhr.open('POST', '/SignIn', true);
         xhr.setRequestHeader('authToken', idToken);
         xhr.send()
