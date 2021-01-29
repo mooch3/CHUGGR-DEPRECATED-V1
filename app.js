@@ -10,7 +10,6 @@ const userControls = require('./controllers/userControllers');
 const auth = require('./controllers/auth')
 
 
-
 app.set('view engine', 'ejs');
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));

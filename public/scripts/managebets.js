@@ -1,4 +1,5 @@
 const firestore = firebase.firestore();
+
 // reference to each bet form: Money Line, Spread, Event
 const formMoneyLine = document.getElementById('money-line-form')
 const formSpread = document.getElementById('spread-form');
