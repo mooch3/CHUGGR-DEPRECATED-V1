@@ -14,7 +14,7 @@ module.exports = {
                       // secure should be set to true when the app is deployed
                     };
                     res.cookie('session', sessionCookie, options);
-                    res.redirect('/dashboard');
+                    res.redirect('/hub/dashboard');
                   });
   },
   cookieCheck: function(req, res, next){

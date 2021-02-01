@@ -100,15 +100,13 @@ function betButtonFunc(betForms) {
 
   });
 };
-
-
 function removeFromInvited(betRef){
   betRef.set({
     invitedUsers: {
       [currentUser]: fieldValue.delete(),
     }
   }, {merge:true})
-}
+};
 
 function removeBet(betRef) {
   betRef.set({
@@ -119,15 +117,13 @@ function removeBet(betRef) {
 
 function incrementBetTotal() {
   currentRef.update({numBets: fieldValue.increment(1)})
-}
+};
 
 function moveToAcceptedUsers(betRef){
   betRef.update({
     acceptedUsers: fieldValue.arrayUnion(currentUser)
   })
 };
-
-
 
 const betForms = document.getElementsByClassName('betForm');
 betButtonFunc(betForms);

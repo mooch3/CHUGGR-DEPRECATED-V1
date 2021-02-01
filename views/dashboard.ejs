@@ -1,28 +1,41 @@
 <%- include('partials/header'); -%>
 <div class="pending-bets" id="pendingBets">
-
 </div>
-
 <h1>Current Bets</h1>
-
 <input type="hidden" id="currentUser" value=<%=currentUser%>>
   <% docs.forEach(item => { %>
-    <%if (!item.data().isFinished){%>
+    <%if (!item.data().isFinished || item.data().outstandingUsers.includes(currentUser)){%>
     <div>
     <table class="bet-card">
     <tr>
-      <td style="border-radius: 15px 0 0 0"><strong><%= item.data().title%></strong> </td>
+      <td style="border-radius: 15px 0 0 0">
+        <%if (item.data().type === "spread") {%>
+        <strong><%=item.data().title%>: <%=item.data().line%></strong>
+        <%} else {%>
+        <strong><%=item.data().title%></strong>
+      <%}%>
+      </td>
       <td><%=item.data().type%></td>
-      <td style="border-radius: 0 15px 0 0">Stake: <%=item.data().stake.beers%>🍺 <%= item.data().stake.shots%>🥃</td>
+      <td style="border-radius: 0 15px 0 0">
+        Stake: <%=item.data().stake.beers%>🍺
+        <%= item.data().stake.shots%>🥃
+      </td>
     </tr>
     <tr>
-      <td class="participant"><%=item.data().team1 + ": "%> <i><%=Object.values(item.data().side1Users).join(', ')%></i> </td>
+      <td class="participant"><%=item.data().team1 + ": "%>
+        <i><%=Object.values(item.data().side1Users).join(', ')%></i>
+      </td>
       <% const dueDate = new Date(item.data().dueDate*1000)%>
-      <td>Due Date: <%=(dueDate.getMonth()+1) + "/" + dueDate.getDate() + "/" + dueDate.getFullYear()%> </td>
+      <td>Due Date:
+        <%=(dueDate.getMonth()+1) + "/" + dueDate.getDate() + "/" + dueDate.getFullYear()%>
+      </td>
       <td></td>
     </tr>
     <tr>
-      <td class="participant" style="border-radius: 0 0 0 15px"><%=item.data().team2 + ": "%> <i><%=Object.values(item.data().side2Users).join(', ')%></i></td>
+      <td class="participant" style="border-radius: 0 0 0 15px">
+        <%=item.data().team2 + ": "%>
+        <i><%=Object.values(item.data().side2Users).join(', ')%></i>
+      </td>
       <% if(item.data().dueDate*1000 < Date.now() && item.data().isFinished == false){ %>
           <td style="color: red">Over Due</td>
       <%} else if (item.data().isFinished == false){%>
@@ -32,11 +45,9 @@
       <%} else if (item.data().isFinished == true && !item.data().outstandingUsers.includes(currentUser)){%>
         <td style="color: #005A9C">Closed</td>
       <%};%>
-
-      <td style="border-radius: 0 0 15px 0"><a href="/bets/<%=item.data().betID%>" style="color: #983728">Details > </a></td>
+      <td style="border-radius: 0 0 15px 0"><a href="/hub/bets/<%=item.data().betID%>" style="color: #983728">Details > </a></td>
     </tr>
   </table>
-
   </div>
   <%};%>
 <%});%>

@@ -155,7 +155,7 @@ formSpread.addEventListener('submit', (e) => {
         side2Users: {},
         title: formSpread.title.value,
         outstandingUsers: [],
-        line: parseInt(formSpread.line.value),
+        line: parseFloat(formSpread.line.value),
         stake: {
           beers: parseInt(formSpread.beers.value),
           shots: parseInt(formSpread.shots.value),
@@ -187,7 +187,7 @@ formSpread.addEventListener('submit', (e) => {
         },
         title: formSpread.title.value,
         outstandingUsers: [],
-        line: parseInt(formSpread.line.value),
+        line: parseFloat(formSpread.line.value),
         stake: {
           beers: parseInt(formSpread.beers.value),
           shots: parseInt(formSpread.shots.value),

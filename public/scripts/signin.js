@@ -15,12 +15,12 @@
       console.log(user);
       firebase.auth().currentUser.getIdToken(true).then((idToken) => {
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', '/SignIn', true);
+        xhr.open('POST', '/hub/signin', true);
         xhr.setRequestHeader('authToken', idToken);
         xhr.send()
         xhr.onreadystatechange = function() {
           if (xhr.readyState == 4 && xhr.status == 200) {
-            window.location = "/dashboard";
+            window.location = "/hub/dashboard";
           }
         }
       }).catch((error) => {

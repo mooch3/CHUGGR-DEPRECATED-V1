@@ -5,13 +5,14 @@
   <br>
   <p>Go back to your Dashboard or place another Bet</p>
   <input type="hidden" id="currentUser" value=<%=currentUser%>>
-  <form action="/managebets" method="post">
+  <form action="/hub/managebets" method="post">
     <br>
     <button class= "btn btn-primary" type="submit" name="button">Back to Dashboard</button>
   </form>
 </div>
 
 <div class="bet-choice">
+  <h1>Choose the Bet Type</h1>
   <button class="btn btn-primary" type="button" name="button" onClick="showSpread()">Spread</button>
   <button class="btn btn-primary" type="button" name="button" onClick="showMoneyline()">Money Line</button>
   <button class="btn btn-primary" type="button" name="button" onClick="showSportEvent()">Event</button>
@@ -34,9 +35,9 @@
   </div>
   <div class="form-group">
     <label>🍺</label>
-    <input type="number" class="form-control" name="beers" max="2" required>
+    <input type="number" class="form-control" name="beers" max="4" required>
     <label>🥃</label>
-    <input type="number" class="form-control" name="shots" max="2" required>
+    <input type="number" class="form-control" name="shots" max="4" required>
   </div>
   <div class="form-group">
     <label>Choose a Side</label>
@@ -51,7 +52,7 @@
   <div class="friend-list">
     <% friendRef.forEach(friend => { %>
       <div class="friend-card">
-        <img class="profile-pic" src="images/CHUGGRLogo.png" alt="">
+        <img class="profile-pic" src="/images/CHUGGRLogo.png" alt="">
         <label for="friend"><%=friend.data().firstName%> <%=friend.data().lastName%> (<%=friend.data().userName%>)</label>
         <input type="checkbox" class="friend-select" value="<%=friend.data().uid%> <%=friend.data().firstName%>">
       </div>
@@ -76,9 +77,9 @@
   </div>
   <div class="form-group">
     <label>🍺</label>
-    <input type="number" class="form-control" name="beers" max="2" required>
+    <input type="number" class="form-control" name="beers" max="4" required>
     <label>🥃</label>
-    <input type="number" class="form-control" name="shots" max="2" required>
+    <input type="number" class="form-control" name="shots" max="4" required>
   </div>
   <div class="form-group">
     <label>Choose a Side</label>
@@ -93,6 +94,7 @@
   <div class="friend-list">
     <% friendRef.forEach(friend => { %>
       <div class="friend-card">
+        <img class="profile-pic" src="/images/CHUGGRLogo.png" alt="">
         <label for="friend"><%=friend.data().firstName%> <%=friend.data().lastName%> (<%=friend.data().userName%>)</label>
         <input type="checkbox" class="friend-select" value="<%=friend.data().uid%> <%=friend.data().firstName%>">
       </div>
@@ -113,7 +115,7 @@
   </div>
   <div class="form-group">
     <label>Line</label>
-    <input type="number" class="form-control" name="line" required>
+    <input type="number" step=".01" class="form-control" name="line" required>
   </div>
   <div class="form-group">
     <label>Due Date</label>
@@ -121,9 +123,9 @@
   </div>
   <div class="form-group">
     <label>🍺</label>
-    <input type="number" class="form-control" name="beers" max="2" required>
+    <input type="number" class="form-control" name="beers" max="4" required>
     <label>🥃</label>
-    <input type="number" class="form-control" name="shots" maxlength="2" required>
+    <input type="number" class="form-control" name="shots" max="4" required>
   </div>
   <div class="form-group">
     <label>Choose a Side</label>
@@ -139,6 +141,7 @@
   <div class="friend-list">
     <% friendRef.forEach(friend => { %>
       <div class="friend-card">
+        <img class="profile-pic" src="/images/CHUGGRLogo.png" alt="">
         <label for="friend"><%=friend.data().firstName%> <%=friend.data().lastName%> (<%=friend.data().userName%>)</label>
         <input type="checkbox" class="friend-select" value="<%=friend.data().uid%> <%=friend.data().firstName%>">
       </div>
