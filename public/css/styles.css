@@ -207,9 +207,7 @@ input[type=submit] {
 #findFriends{
   width: 100%
 }
-  #profile {
-    /* padding-right: 140px; */
-  }
+
 #logo {
   font-size: 5rem;
   font-family: Tondu, sans-serif;
@@ -294,7 +292,7 @@ input[type=submit] {
 .label-two {
   margin-left: 70px;
 }
-
+/* profile page */
 
 .profile {
   color: black;
@@ -322,6 +320,33 @@ input[type=submit] {
 
 .profile p {
   font-size: 2rem;
+}
+.pastbets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 1rem;
+  align-content: space-around;
+  margin: 75px 150px;
+}
+
+.pastbets-grid div {
+  padding: 1.5rem;
+  border-radius: 1rem;
+  background: #E0E2DB;
+  height: 250px;
+  color: #151E3F;
+}
+.pastbets-grid p {
+  font-size: 2rem
+}
+
+.pastbets-grid a {
+  color: #151E3F;
+  font-size: 3rem;
+  font-family: 'Sansita Swashed', cursive;
+}
+.pastbets-title {
+  padding: 5rem 0 0 0;
 }
 
 #placeholder {

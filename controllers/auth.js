@@ -11,7 +11,7 @@ module.exports = {
                       maxAge: expiresIn,
                       httpOnly: true,
                       secure: false
-                      // secure should be set to true when the app is deployed
+                      // TODO: secure should be set to true when the app is deployed
                     };
                     res.cookie('session', sessionCookie, options);
                     res.redirect('/hub/dashboard');

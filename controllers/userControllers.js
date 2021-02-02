@@ -6,8 +6,6 @@ admin.initializeApp({
   databaseURL: "https://chuggr-6a851.firebaseio.com"
 });
 
-
-
 const db = admin.firestore();
 
 module.exports = {
@@ -70,23 +68,34 @@ module.exports = {
   },
   loadUserProfile: async function(req, res) {
     let currentUser = req.decodedClaims.uid;
-    const requestedProfile = currentUser;
     const userProfile = await db.collection('testUsers')
-                                .where('uid', '==', requestedProfile)
+                                .where('uid', '==', currentUser)
                                 .get();
+    const pastBets = await db.collection('testBets')
+                             .where('acceptedUsers', 'array-contains', currentUser)
+                             .where('isFinished', '==', true)
+                             .get();
     res.render('profile', {
-      userProfile: userProfile
+      userProfile: userProfile,
+      pastBets: pastBets,
+      currentUser: currentUser
     });
   },
 
   loadUserFriendsProfile: async function(req, res) {
-    let currentUser = req.decodedClaims.uid;
+
     const requestedProfile = req.params.userUID;
     const userProfile = await db.collection('testUsers')
                                 .where('uid', '==', requestedProfile)
                                 .get();
+    const pastBets = await db.collection('testBets')
+                             .where('acceptedUsers', 'array-contains', requestedProfile)
+                             .where('isFinished', '==', true)
+                             .get();
     res.render('profile', {
-      userProfile: userProfile
+      userProfile: userProfile,
+      pastBets: pastBets,
+      currentUser: requestedProfile
     });
   },
 
