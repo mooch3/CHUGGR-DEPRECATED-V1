@@ -6,6 +6,8 @@ const auth = require('../controllers/auth');
 // Routes
 router.get('/dashboard', auth.cookieCheck, user.loadUserDashboard);
 
+router.get('/findbets', auth.cookieCheck, user.loadUserFindBets);
+
 router.get('/pendingbets', auth.cookieCheck, user.loadUserPendingBets);
 
 router.get('/managebets', auth.cookieCheck, user.loadUserManageBets);

@@ -120,3 +120,4 @@ dist
 
 .DS_Store
 public/scripts/firebasehelper.js
+client/chuggr-components/node_modules

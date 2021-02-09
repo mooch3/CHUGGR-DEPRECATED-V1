@@ -1,10 +1,11 @@
 <%- include('partials/header'); -%>
 <div class="pending-bets" id="pendingBets">
 </div>
-<h1>My Bets</h1>
+<h1>Find Bets to Join</h1>
 <input type="hidden" id="currentUser" value=<%=currentUser%>>
   <% docs.forEach(item => { %>
-    <%if (!item.data().isFinished || item.data().outstandingUsers.includes(currentUser)){%>
+    <%if (!item.data().allUsers.includes(currentUser)){%>
+    <%if (!item.data().isFinished && item.data().dueDate*1000 > Date.now()){%>
     <div>
     <table class="bet-card">
     <tr>
@@ -50,7 +51,9 @@
   </table>
   </div>
   <%};%>
+  <%};%>
 <%});%>
+
 <script src="/scripts/firebasehelper.js"></script>
 <script src="/scripts/pendingBetsNotif.js"></script>
 <script src="/scripts/DashboardCleanUp.js"></script>

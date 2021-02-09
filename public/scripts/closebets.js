@@ -1,7 +1,54 @@
-const betRef = firestore.collection('testBets').doc(betID);
 const fieldValue = firebase.firestore.FieldValue;
+const betID = document.getElementById('betID').value;
+const currentUser = document.getElementById('currentUser').value;
 const closeBetButton = document.getElementById('closeBetButton');
 const oustandingBetButton = document.getElementById('outstandingBetButton');
+const uninvitedUser = firestore.collection('testUsers').doc(currentUser);
+const joinBet = document.getElementById('joinBet');
+const betRef = firestore.collection('testBets').doc(betID);
+
+if (joinBet != null){
+  uninvitedUser.get().then((doc) => {
+      const joinBetButton = document.getElementById('joinBetButton');
+      console.log(doc.data().userName)
+      joinBetButton.addEventListener('click', (e) => {
+        const joinSideOne = document.getElementById('joinSideOne');
+        const joinSideTwo = document.getElementById('joinSideTwo');
+      
+        if (joinSideOne.checked === true){
+          betRef.set({
+            side1Users: {
+              [currentUser]: doc.data().userName,
+            }
+          }, {
+            merge: true
+          });
+          incrementBetTotal();
+          moveToAcceptedUsers(betRef);
+          addToAllUsers(betRef)
+          console.log('You joined side 1')
+          setTimeout(() => {
+            location.reload()
+          }, 800);
+        } else if (joinSideTwo.checked === true){
+          betRef.set({
+            side2Users: {
+              [currentUser]: doc.data().userName,
+            },
+          }, {
+            merge: true
+          });
+          incrementBetTotal();
+          moveToAcceptedUsers(betRef);
+          addToAllUsers(betRef)
+          console.log('You joined side 2')
+          setTimeout(() => {
+            location.reload()
+          }, 800);
+        }
+      })
+  })
+};
 
 
 betRef.get().then((doc) => {
@@ -61,7 +108,7 @@ function closeBet(doc, side1, side2) {
 
   setTimeout(() => {
     location.reload();
-  }, 700);
+  }, 800);
 
   console.log('bet closed successfully');
 };
@@ -148,4 +195,20 @@ function decrementOutstanding(doc) {
   }, {
     merge: true
   });
-}
+};
+
+function incrementBetTotal() {
+  uninvitedUser.update({numBets: fieldValue.increment(1)})
+};
+
+function moveToAcceptedUsers(betRef){
+  betRef.update({
+    acceptedUsers: fieldValue.arrayUnion(currentUser)
+  })
+};
+
+function addToAllUsers(betRef){
+  betRef.update({
+    allUsers: fieldValue.arrayUnion(currentUser)
+  })
+};

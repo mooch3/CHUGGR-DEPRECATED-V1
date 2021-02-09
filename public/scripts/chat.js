@@ -1,7 +1,7 @@
-  let firestore = firebase.firestore();
-
+const firestore = firebase.firestore();
+const renderChatBox = document.getElementById('renderChatBox')
   // retrieve latest messages from firestore and order by time stamp
-
+if(renderChatBox != null){
   // load messages when the page is called, then only listen for changes (not all documents)
   const currentUser = document.getElementById('currentUser').value;
   const userRef = firestore.collection('testUsers').doc(currentUser)
@@ -9,22 +9,23 @@
   const chatRef = firestore.collection('testChatRooms').doc(betID);
   const send = document.getElementById('sendMessage');
 
+  
   send.addEventListener('click', (e) => {
     const input = document.getElementById('chatValue').value;
+      userRef.get().then((doc) => {
+        const message = {
+          body: input,
+          timestamp: Date.now(),
+          userName: doc.data().userName,
+          uid: doc.data().uid
+        };
 
-    userRef.get().then((doc) => {
-      const message = {
-        body: input,
-        timestamp: Date.now(),
-        userName: doc.data().userName,
-        uid: doc.data().uid
-      };
+        sendMessage(message);
 
-      sendMessage(message);
-
-    });
-    document.getElementById('chatValue').value = '';
+      });
+   document.getElementById('chatValue').value = '';
   });
+
 
   function sendMessage(message) {
     // TODO: do I want to send messages from client side or back end?
@@ -89,3 +90,4 @@
 
   createChat();
   getRealtimeChat();
+}

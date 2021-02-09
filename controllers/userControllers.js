@@ -21,6 +21,17 @@ module.exports = {
     });
   },
 
+  loadUserFindBets: async function(req, res) {
+    let currentUser = req.decodedClaims.uid;
+    const docs = await db.collection('testBets')
+                         .where('isFinished', '==', false)
+                         .get()
+    res.render('findbets', {
+      docs: docs,
+      currentUser: currentUser
+    })
+  },
+
   loadUserPendingBets: async function(req, res) {
     let currentUser = req.decodedClaims.uid;
     const pendingBets = db.collection('testBets')
@@ -36,7 +47,7 @@ module.exports = {
   },
 
   loadUserManageBets: async function(req, res) {
-    let currentUser = req.decodedClaims.uid;
+    const currentUser = req.decodedClaims.uid;
     const nameRef = await db.collection('testUsers')
                             .doc(currentUser)
     const friendRef = await db.collection('testUsers')
@@ -50,7 +61,7 @@ module.exports = {
   },
 
   loadUserDynamicBets: async function(req, res) {
-    let currentUser = req.decodedClaims.uid;
+    const currentUser = req.decodedClaims.uid;
     const requestedBet = req.params.betId;
     const bet = await db.collection('testBets')
                         .doc(requestedBet)

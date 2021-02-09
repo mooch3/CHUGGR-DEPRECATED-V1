@@ -35,47 +35,61 @@
     </tr>
   </table>
 </div>
-<% if(bet.isFinished == false){ %>
-<div class="close-bet" id="closeBox">
-  <form id="closeItOut" method="post" action="/bets/<%=bet.betID%>">
-    <h1>Close the Bet</h1>
-    <p> Who won?</p>
-    <label id="side1Radio"><%=bet.team1%></label>
-    <input type="radio" name="winner" id="side1UsersSelect" class="winner-select">
-    <label id="side2Radio"><%=bet.team2%></label>
-    <input type="radio" name="winner" id="side2UsersSelect" class="winner-select">
-    <br>
-  </form>
-  <button name="submit" class="btn btn-primary" id="closeBetButton">Close Bet</button>
-</div>
-<%} else if (bet.isFinished == true && bet.outstandingUsers.includes(currentUser)){%>
+<% if(bet.allUsers.includes(currentUser)){%>
+  <% if(bet.isFinished == false){ %>
   <div class="close-bet" id="closeBox">
-    <form id="outstandingDone" method="post" action="/bets/<%=bet.betID%>">
-      <h1>Did You Fulfill Your Bet?</h1>
-      <p> Do you promise?</p>
-      <label id="outstandingBtn">Yes, I promise.</label>
-      <input type="radio" name="outstanding" id="outstandingBtnSelect" class="winner-select">
+    <form id="closeItOut" method="post" action="/bets/<%=bet.betID%>">
+      <h1>Close the Bet</h1>
+      <p> Who won?</p>
+      <label id="side1Radio"><%=bet.team1%></label>
+      <input type="radio" name="winner" id="side1UsersSelect" class="winner-select">
+      <label id="side2Radio"><%=bet.team2%></label>
+      <input type="radio" name="winner" id="side2UsersSelect" class="winner-select">
       <br>
     </form>
-    <button name="submit" class="btn btn-primary" id="outstandingBetButton">Tribute Was Paid</button>
+    <button name="submit" class="btn btn-primary" id="closeBetButton">Close Bet</button>
   </div>
-<%};%>
-<div class="chatbox group-chat">
-  <div class="chatbox-top">
-    <div class="chatbox-avatar">
-      <img src="/images/CHUGGRLogo.png" alt="">
+  <%} else if (bet.isFinished == true && bet.outstandingUsers.includes(currentUser)){%>
+    <div class="close-bet" id="closeBox">
+      <form id="outstandingDone" method="post" action="/bets/<%=bet.betID%>">
+        <h1>Did You Fulfill Your Bet?</h1>
+        <p> Do you promise?</p>
+        <label id="outstandingBtn">Yes, I promise.</label>
+        <input type="radio" name="outstanding" id="outstandingBtnSelect" class="winner-select">
+        <br>
+      </form>
+      <button name="submit" class="btn btn-primary" id="outstandingBetButton">Tribute Was Paid</button>
     </div>
-    <div class="chat-group-name">
-      <!-- bet name -->
+  <%};%>
+  <div id="renderChatBox" class="chatbox group-chat">
+    <div class="chatbox-top">
+      <div class="chatbox-avatar">
+        <img src="/images/CHUGGRLogo.png" alt="">
+      </div>
+      <div class="chat-group-name">
+        <%=bet.title%>
+      </div>
+    </div>
+    <div class="chat-messages" id="chat-message-container">
     </div>
   </div>
-  <div class="chat-messages" id="chat-message-container">
-  </div>
+  <div class="chat-input-holder">
+    <input type="text" class="chat-input" id="chatValue"></input>
+    <input type="submit" value="Send" class="message-send" id="sendMessage" />
+<%} else {%>
+<div class="close-bet">
+  <form id="joinBet" method="post" action="/bets/<%=bet.betID%>">
+    <h1>Join This Bet</h1>
+    <p>Choose a Side</p>
+    <label id="side1Radio"><%=bet.team1%></label>
+    <input type="radio" name="side" id="joinSideOne" class="winner-select">
+    <label id="side2Radio"><%=bet.team2%></label>
+    <input type="radio" name="side" id="joinSideTwo" class="winner-select">
+    <br>
+  </form>
+  <button name="submit" class="btn btn-primary" id="joinBetButton">Join Bet</button>
 </div>
-<div class="chat-input-holder">
-  <input type="text" class="chat-input" id="chatValue"></input>
-  <input type="submit" value="Send" class="message-send" id="sendMessage" />
-
+<%}%>
 
 </div>
 <script src="/scripts/firebasehelper.js"></script>
