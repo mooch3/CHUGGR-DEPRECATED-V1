@@ -612,30 +612,6 @@ ul {
   text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
 }
 
-.attachment-panel {
-  padding: 3px 10px;
-  text-align: right;
-}
-
-.attachment-panel a, .attachment-panel a:link, .attachment-panel a:visited {
-  margin: 0 0 0 7px;
-  text-decoration: none;
-  color: rgba(0, 0, 0, 0.5);
-}
-
-.chatbox-min {
-  margin-bottom: -362px;
-/*   height: 46px; */
-}
-
-.chatbox-min .chatbox-avatar {
-  width: 60px;
-  height: 60px;
-}
-
-.chatbox-min .chat-partner-name, .chatbox-min .chat-group-name {
-  padding: 0 0 0 75px;
-}
 
 .settings-popup {
   background: white;

@@ -58,13 +58,21 @@
       <%} else {%>
         <p><%=bet.data().title%></p>
       <%}%>
-      <p><%=bet.data().stake.beers%>🍺 <%=bet.data().stake.shots%>🥃</p>
       <%if (bet.data().winner === "one" && bet.data().side1Users.hasOwnProperty(currentUser)){%>
         <a href="/hub/bets/<%=bet.data().betID%>">Won</a>
+        <br>
+        <br>
+        <p><%=bet.data().stake.beers%>🍺 <%=bet.data().stake.shots%>🥃 Given </p>
       <%} else if (bet.data().winner === "two" && bet.data().side2Users.hasOwnProperty(currentUser)){%>
         <a href="/hub/bets/<%=bet.data().betID%>">Won</a>
+        <br>
+        <br>
+        <p><%=bet.data().stake.beers%>🍺 <%=bet.data().stake.shots%>🥃 Given </p>
       <%} else {%>
         <a href="/hub/bets/<%=bet.data().betID%>">Lost</a>
+        <br>
+        <br>
+        <p><%=bet.data().stake.beers%>🍺 <%=bet.data().stake.shots%>🥃 Received</p>
       <%}%>
       <%}%>
       </div>
