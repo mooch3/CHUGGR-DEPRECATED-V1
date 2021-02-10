@@ -54,12 +54,11 @@ formMoneyLine.addEventListener('submit', (e) => {
 
 
   firestore.collection('testUsers').doc(currentUser).get().then(function(doc) {
-    console.log(doc.data().firstName);
     // Wait for promise from firestore to load documents and use that data to get user first name
     if (side1.checked) {
       // create bet object
       const bet = {
-        dateOpened: Date.now(),
+        dateOpened: Date.now()/1000,
         acceptedUsers: [currentUser],
         allUsers: allUsersArr,
         invitedUsers: selectedFriends,
@@ -89,7 +88,7 @@ formMoneyLine.addEventListener('submit', (e) => {
 
     } else if (side2.checked) {
       const bet = {
-        dateOpened: Date.now(),
+        dateOpened: Date.now()/1000,
         acceptedUsers: [currentUser],
         allUsers: allUsersArr,
         invitedUsers: selectedFriends,
@@ -144,7 +143,7 @@ formSpread.addEventListener('submit', (e) => {
       // create bet object
       const bet = {
         betID: betRef.id,
-        dateOpened: Date.now(),
+        dateOpened: Date.now()/1000,
         dueDate: new Date(formSpread.dueDate.value).getTime() / 1000,
         acceptedUsers: [currentUser],
         allUsers: allUsersArr,
@@ -176,7 +175,7 @@ formSpread.addEventListener('submit', (e) => {
       // TODO: consolidate bet object...?
       const bet = {
         betID: betRef.id,
-        dateOpened: Date.now(),
+        dateOpened: Date.now()/1000,
         dueDate: new Date(formSpread.dueDate.value).getTime() / 1000,
         acceptedUsers: [currentUser],
         allUsers: allUsersArr,
@@ -228,7 +227,7 @@ formEvent.addEventListener('submit', (e) => {
       const bet = {
         betID: betRef.id,
         title: formEvent.title.value,
-        dateOpened: Date.now(),
+        dateOpened: Date.now()/1000,
         dueDate: new Date(formEvent.dueDate.value).getTime() / 1000,
         acceptedUsers: [currentUser],
         allUsers: allUsersArr,
@@ -256,7 +255,7 @@ formEvent.addEventListener('submit', (e) => {
       const bet = {
         betID: betRef.id,
         title: formEvent.title.value,
-        dateOpened: Date.now(),
+        dateOpened: Date.now()/1000,
         dueDate: new Date(formEvent.dueDate.value).getTime() / 1000,
         acceptedUsers: [currentUser],
         allUsers: allUsersArr,

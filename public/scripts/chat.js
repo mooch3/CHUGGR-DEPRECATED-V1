@@ -8,14 +8,22 @@ if(renderChatBox != null){
   const betID = document.getElementById('betID').value;
   const chatRef = firestore.collection('testChatRooms').doc(betID);
   const send = document.getElementById('sendMessage');
+  const inputRef = document.getElementById('chatValue')
 
-  
+  inputRef.addEventListener('keypress', (e)=> {
+    if (e.keyCode === 13){
+      e.preventDefault();
+      send.click();
+      const chatbox = document.getElementById('chat-message-container')
+      chatbox.scrollTop = chatbox.scrollHeight - chatbox.clientHeight;
+    }
+  })
   send.addEventListener('click', (e) => {
     const input = document.getElementById('chatValue').value;
       userRef.get().then((doc) => {
         const message = {
           body: input,
-          timestamp: Date.now(),
+          timestamp: Date.now()/1000,
           userName: doc.data().userName,
           uid: doc.data().uid
         };

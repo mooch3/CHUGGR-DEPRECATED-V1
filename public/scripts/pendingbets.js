@@ -66,7 +66,7 @@ function betButtonFunc(betForms) {
           console.log('You joined side 1')
           setTimeout(() => {
             location.reload()
-          }, 100);
+          }, 1000);
 
         } else if (sideTwo.checked == true) {
           betRef.set({
@@ -83,7 +83,7 @@ function betButtonFunc(betForms) {
           console.log("You joined side 2!")
           setTimeout(() => {
             location.reload()
-          }, 300);
+          }, 1000);
         } else {
           console.log("no check received");
         };
@@ -95,7 +95,7 @@ function betButtonFunc(betForms) {
         console.log('You rejected the bet');
         setTimeout(() => {
           location.reload()
-        }, 300);
+        }, 1000);
       });
 
   });

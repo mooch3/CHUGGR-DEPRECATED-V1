@@ -12,8 +12,11 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-app.use('/hub', userRoutes)
-app.use('/', publicRoutes)
+app.use('/hub', userRoutes);
+app.use('/', publicRoutes);
+app.use(function (req, res, next) {
+  res.status(404).render('404.ejs')
+});
 
 // localhost:3000
 app.listen(3000, () => {

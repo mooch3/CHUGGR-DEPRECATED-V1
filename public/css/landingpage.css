@@ -15,7 +15,10 @@ em {
 nav {
   color: #E0E2DB;
 }
-
+.error-logo {
+  width: auto;
+  height: 300px;
+}
 
 @font-face {
   font-family: 'Tondu';

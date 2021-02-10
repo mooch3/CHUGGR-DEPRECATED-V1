@@ -69,5 +69,9 @@ auth.createUserWithEmailAndPassword(email, password).then(user => {
   // Handle Errors here.
   var errorCode = error.code;
   var errorMessage = error.message;
+  
+  if (errorCode == 'auth/email-already-in-use') {
+    alert(errorMessage);
+  }
 });
 });

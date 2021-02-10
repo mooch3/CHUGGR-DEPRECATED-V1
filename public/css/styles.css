@@ -273,7 +273,7 @@ input[type=submit] {
     padding-top: 3%;
   }
   .topnav.responsive #sign-out {
-    padding-top: 50px;
+    padding-top: 70px;
   }
 
 }
@@ -502,7 +502,7 @@ ul {
 
 .chat-messages {
   border-top: 1px solid rgba(0, 0, 0, .05);
-  padding: 10px;
+  padding: 10px 10px 50px 10px;
   overflow: auto;
   display: block;
   flex-flow: row wrap;
