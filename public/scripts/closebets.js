@@ -52,6 +52,7 @@ if (joinBet != null){
 
 
 betRef.get().then((doc) => {
+  console.log(Object.keys(doc.data().side1Users).length);
   if (closeBetButton != null) {
     console.log(doc.data());
     closeBetButton.addEventListener('click', (e) => {
@@ -79,9 +80,11 @@ function closeBet(doc, side1, side2) {
     let winnersCircle = doc.data().side1Users;
     let losersCircle = doc.data().side2Users;
 
-    for (const winner in winnersCircle) {
-      incrementWinners(winner, beers, shots);
-    }
+    if (Object.keys(doc.data().side2Users).length > 0) {
+    for (const winner in winnersCircle) {   
+        incrementWinners(winner, beers, shots);   
+     };
+    };
 
     for (const loser in losersCircle) {
       incrementLosers(loser, beers, shots);
@@ -93,8 +96,10 @@ function closeBet(doc, side1, side2) {
     let winnersCircle = doc.data().side2Users;
     let losersCircle = doc.data().side1Users;
 
-    for (const winner in winnersCircle) {
-      incrementWinners(winner, beers, shots);
+    if (Object.keys(doc.data().side1Users).length > 0) {
+    for (const winner in winnersCircle) {  
+        incrementWinners(winner, beers, shots);
+      };  
     };
     for (const loser in losersCircle) {
       incrementLosers(loser, beers, shots);
