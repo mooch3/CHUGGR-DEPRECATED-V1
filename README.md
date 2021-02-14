@@ -3,7 +3,7 @@ CHUGGR is a social media app that allows friends to connect over sports and beve
 
 ## DEMO: ##
 Accept a friend's bet and send them a message:
-![CHUGGR App Demo](CHUGGRWeb.gif)
+![CHUGGR App Demo](CHUGGWeb.gif)
 
 
 ### Through building CHUGGR as an independent side project, I developed the following skills: ###
