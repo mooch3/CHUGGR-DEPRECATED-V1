@@ -2,7 +2,8 @@
 CHUGGR is a social media app that allows friends to connect over sports and beverages from wherever they are in the world. It is light-hearted application that provides a fun user experience that includes realtime chats, user authentication, friends, follows, and betting. Web v1.1 is live and available to join here: https://chuggr-6a851.web.app/
 
 ## DEMO: ##
-Login, accept bets, find bets, logout:
+Login, view bets, send messages, find bets, view friends, logout:
+
 ![CHUGGR App Demo](CHUGGRDemo.gif)
 
 
