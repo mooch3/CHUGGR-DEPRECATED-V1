@@ -16,7 +16,8 @@ Login, view bets, send messages, find bets, view friends, logout:
  * Custom backend development and middleware integration
  * AJAX techniques to communicate between front end and backend
  * Extensive use of HTTPS protocols
- * Javascript, Node.js, CSS, HTML5
+ * Javascript, Node.js, HTML5
+ * Extensive use of CSS and grids to create mobile responsive design
  * Firebase Hosting
  * Clear communication of data model and changes with friend who is developing the CHUGGR iOS app.
 
