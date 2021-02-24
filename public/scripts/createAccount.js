@@ -14,7 +14,7 @@ createAccountBtn.addEventListener('click', (e) => {
 auth.createUserWithEmailAndPassword(email, password).then(user => {
   console.log(firebase.auth().currentUser.uid);
   const uid = firebase.auth().currentUser.uid;
-  const newUser = firestore.collection('testUsers').doc(uid);
+  const newUser = firestore.collection('users').doc(uid);
 
   newUser.set({
     betsLost: 0,
@@ -50,12 +50,12 @@ auth.createUserWithEmailAndPassword(email, password).then(user => {
       auth.currentUser.getIdToken(true).then((idToken) => {
         const xhr = new XMLHttpRequest();
 
-        xhr.open('POST', '/SignIn', true);
+        xhr.open('POST', '/hub/signin', true);
         xhr.setRequestHeader('authToken', idToken);
         xhr.send()
         xhr.onreadystatechange = function() {
           if (xhr.readyState == 4 && xhr.status == 200) {
-            window.location = "/dashboard";
+            window.location = "/hub/dashboard";
           }
         }
       }).catch((error) => {
@@ -67,11 +67,8 @@ auth.createUserWithEmailAndPassword(email, password).then(user => {
   });
 }).catch((error) => {
   // Handle Errors here.
-  var errorCode = error.code;
-  var errorMessage = error.message;
+  var errorMessage = error.message;  
+  alert(errorMessage);
   
-  if (errorCode == 'auth/email-already-in-use') {
-    alert(errorMessage);
-  }
 });
 });

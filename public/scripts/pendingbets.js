@@ -3,37 +3,9 @@ const fieldValue = firebase.firestore.FieldValue;
 
 
 const currentUser = document.getElementById('currentUser').value;
-const pendingBets = firestore.collection('testBets').where('allUsers', 'array-contains', currentUser);
+const pendingBets = firestore.collection('bets').where('allUsers', 'array-contains', currentUser);
 const orderedBets = pendingBets.orderBy('dateOpened', 'desc');
-const currentRef = firestore.collection('testUsers').doc(currentUser);
-
-function fixData(betCardDeck) {
-
-
-  Array.from(betCardDeck).forEach((betCard) => {
-
-    // iterate through each card forEach bet card...
-    if (betCard.rows[0].cells[1].innerHTML == "moneyline") {
-      betCard.rows[0].cells[1].innerHTML = "Money Line";
-
-    } else if (betCard.rows[0].cells[1].innerHTML == "spread") {
-      betCard.rows[0].cells[1].innerHTML = "Spread";
-      let overNode = document.createTextNode("Over");
-      let underNode = document.createTextNode("Under");
-      betCard.rows[1].cells[0].appendChild(overNode);
-      betCard.rows[1].cells[2].appendChild(underNode);
-
-    } else if (betCard.rows[0].cells[1].innerHTML == "event") {
-      betCard.rows[0].cells[1].innerHTML = "Event";
-      let forNode = document.createTextNode("For");
-      let againstNode = document.createTextNode("Against");
-      betCard.rows[1].cells[0].appendChild(forNode);
-      betCard.rows[1].cells[2].appendChild(againstNode);
-
-    }
-  });
-};
-
+const currentRef = firestore.collection('users').doc(currentUser);
 
 function betButtonFunc(betForms) {
 
@@ -47,7 +19,7 @@ function betButtonFunc(betForms) {
     let btn1 = document.getElementById('btn1' + betID);
     let btn2 = document.getElementById('btn2' + betID);
 
-    let betRef = firestore.collection('testBets').doc(betID);
+    let betRef = firestore.collection('bets').doc(betID);
     console.log(sideOne.checked);
 
       btn1.addEventListener('click', (e) => {
@@ -130,5 +102,4 @@ betButtonFunc(betForms);
 console.log(betForms);
 
 const betCardDeck = document.getElementsByClassName('bet-card');
-fixData(betCardDeck);
-console.log(betCardDeck);
+

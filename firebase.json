@@ -1,0 +1,23 @@
+{
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "hosting": {
+    "headers": [
+      { "source":"/service-worker.js", "headers": [{"key": "Cache-Control", "value": "no-cache, no-store, must-revalidate"}] }
+    ],
+    "public": "public",
+    "rewrites": [{
+      "source": "/**",
+      "function": "app"
+    }],
+    "ignore": [
+      "firebase.json",
+      "**/node_modules/**",
+      "chuggr-6a851-463bda934884.json",
+      "/Users/smithdc/Desktop/MyApp/CHUGGR/README.md"
+
+    ]
+  }
+}

@@ -1,8 +1,8 @@
 const express = require('express');
 const admin = require('firebase-admin');
-const SERVICE_ACCOUNT = require(process.env.FIREBASE_SERVICE_ACCOUNT);
+
 admin.initializeApp({
-  credential: admin.credential.cert(SERVICE_ACCOUNT),
+  credential: admin.credential.applicationDefault(),
   databaseURL: "https://chuggr-6a851.firebaseio.com"
 });
 
@@ -12,7 +12,7 @@ module.exports = {
 
   loadUserDashboard: async function(req, res) {
     let currentUser = req.decodedClaims.uid;
-    const docs = await db.collection('testBets')
+    const docs = await db.collection('bets')
                          .where('acceptedUsers', 'array-contains', currentUser)
                          .get();
     res.render('dashboard', {
@@ -23,7 +23,7 @@ module.exports = {
 
   loadUserFindBets: async function(req, res) {
     let currentUser = req.decodedClaims.uid;
-    const docs = await db.collection('testBets')
+    const docs = await db.collection('bets')
                          .where('isFinished', '==', false)
                          .get()
     res.render('findbets', {
@@ -34,7 +34,7 @@ module.exports = {
 
   loadUserPendingBets: async function(req, res) {
     let currentUser = req.decodedClaims.uid;
-    const pendingBets = db.collection('testBets')
+    const pendingBets = db.collection('bets')
                           .where('allUsers', 'array-contains', currentUser)
                           .orderBy('dateOpened', 'desc');
 
@@ -48,9 +48,9 @@ module.exports = {
 
   loadUserManageBets: async function(req, res) {
     const currentUser = req.decodedClaims.uid;
-    const nameRef = await db.collection('testUsers')
+    const nameRef = await db.collection('users')
                             .doc(currentUser)
-    const friendRef = await db.collection('testUsers')
+    const friendRef = await db.collection('users')
                               .doc(currentUser)
                               .collection('friends')
                               .get();
@@ -63,11 +63,11 @@ module.exports = {
   loadUserDynamicBets: async function(req, res) {
     const currentUser = req.decodedClaims.uid;
     const requestedBet = req.params.betId;
-    const bet = await db.collection('testBets')
+    const bet = await db.collection('bets')
                         .doc(requestedBet)
                         .get();
-    const chatRef = await db.collection('testChatRooms')
-                            .doc('chatTest')
+    const chatRef = await db.collection('chatRooms')
+                            .doc(requestedBet)
                             .collection('actualMessages')
                             .get();
     res.render('bets', {
@@ -79,10 +79,10 @@ module.exports = {
   },
   loadUserProfile: async function(req, res) {
     let currentUser = req.decodedClaims.uid;
-    const userProfile = await db.collection('testUsers')
+    const userProfile = await db.collection('users')
                                 .where('uid', '==', currentUser)
                                 .get();
-    const pastBets = await db.collection('testBets')
+    const pastBets = await db.collection('bets')
                              .where('acceptedUsers', 'array-contains', currentUser)
                              .where('isFinished', '==', true)
                              .get();
@@ -96,10 +96,10 @@ module.exports = {
   loadUserFriendsProfile: async function(req, res) {
 
     const requestedProfile = req.params.userUID;
-    const userProfile = await db.collection('testUsers')
+    const userProfile = await db.collection('users')
                                 .where('uid', '==', requestedProfile)
                                 .get();
-    const pastBets = await db.collection('testBets')
+    const pastBets = await db.collection('bets')
                              .where('acceptedUsers', 'array-contains', requestedProfile)
                              .where('isFinished', '==', true)
                              .get();
@@ -112,7 +112,7 @@ module.exports = {
 
   loadUserFriendsList: async function(req, res) {
     let currentUser = req.decodedClaims.uid;
-    const friendsList = await db.collection('testUsers')
+    const friendsList = await db.collection('users')
                                 .doc(currentUser)
                                 .collection('friends')
                                 .get();

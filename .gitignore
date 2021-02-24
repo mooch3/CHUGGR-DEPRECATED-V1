@@ -119,5 +119,5 @@ dist
 .pnp.*
 
 .DS_Store
-public/scripts/firebasehelper.js
 client/chuggr-components/node_modules
+/Users/smithdc/Desktop/MyApp/CHUGGR/README.md

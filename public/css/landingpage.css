@@ -1,15 +1,20 @@
+@font-face {
+  font-family: 'Tondu';
+  src: url('Tondu_Beta.ttf');
+}
+
 body{
   text-align: center;
   color: #E0E2DB;
   font-family: 'Lato', sans-serif;
 }
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Sansita Swashed', cursive;
+  font-family: 'Tondu', cursive;
   color: #E0E2DB;
 
 }
 em {
-  font-family: 'Sansita Swashed', cursive;
+  font-family: 'Tondu', cursive;
   font-size: 2rem;
 }
 nav {
@@ -20,10 +25,7 @@ nav {
   height: 300px;
 }
 
-@font-face {
-  font-family: 'Tondu';
-  src: url('Tondu_Beta.ttf');
-}
+
 #title{
   font-family: 'Tondu';
   font-size: 3rem;
@@ -72,11 +74,12 @@ nav {
   width: 50%;
   position: absolute;
   left: 20%;
+  height: auto;
 }
 .slogan {
   padding: 23% 15% 7% 12%;
   font-size: 3rem;
-  font-family:'Sansita Swashed', cursive;
+  font-family:'Tondu', cursive;
 }
 
 
@@ -104,9 +107,13 @@ nav {
 
 .blue-section{
   background-color: #151E3F;
-  height: 500px;
+  height: 550px;
 }
 
+.blue-section-long {
+  background-color: #151E3F;
+  height: 700px;
+}
 .gray-section{
   background-color: #E0E2DB;
   padding: 10% 5%;

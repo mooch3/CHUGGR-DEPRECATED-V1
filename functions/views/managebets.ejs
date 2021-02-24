@@ -7,15 +7,15 @@
   <input type="hidden" id="currentUser" value=<%=currentUser%>>
   <form action="/hub/managebets" method="post">
     <br>
-    <button class= "btn btn-primary" type="submit" name="button">Back to Dashboard</button>
+    <button class= "btn-lg btn-primary" type="submit" name="button">Back to Dashboard</button>
   </form>
 </div>
 
 <div class="bet-choice">
   <h1>Choose the Bet Type</h1>
-  <button class="btn btn-primary" type="button" name="button" onClick="showSpread()">Spread</button>
-  <button class="btn btn-primary" type="button" name="button" onClick="showMoneyline()">Money Line</button>
-  <button class="btn btn-primary" type="button" name="button" onClick="showSportEvent()">Event</button>
+  <button class="btn-lg btn-primary" type="button" name="button" onClick="showSpread()">Spread</button>
+  <button class="btn-lg btn-primary" type="button" name="button" onClick="showMoneyline()">Moneyline</button>
+  <button class="btn-lg btn-primary" type="button" name="button" onClick="showSportEvent()">Event</button>
 </div>
 
 <div id="money-line">
@@ -34,32 +34,34 @@
     <input type="date" class="form-control" name="dueDate" required>
   </div>
   <div class="form-group">
-    <label>🍺</label>
-    <input type="number" class="form-control" name="beers" max="4" required>
-    <label>🥃</label>
-    <input type="number" class="form-control" name="shots" max="4" required>
+    <label>Number of 🍺</label>
+    <input type="number" class="form-control" name="beers" max="4" value="1" placeholder="1"  required>
+    <label>Number of 🥃</label>
+    <input type="number" class="form-control" name="shots" max="4" value="0" required>
   </div>
   <div class="form-group">
     <label>Choose a Side</label>
   </div>
   <div class="form-group">
     <label> Team 1</label>
-    <input type="radio" name="side" id="side1" value=<%= currentUser%> required>
+    <input type="radio" name="side" id="side1" class="winner-select" value=<%= currentUser%> required>
     <label class="label-two"> Team 2</label>
-    <input type="radio" name="side"  id="side2" value=<%=currentUser%>>
+    <input type="radio" name="side"  id="side2" class="winner-select" value=<%=currentUser%>>
   </div>
-  <label>Invite Friends to the Bet</label>
+  <div class="form-group">
+    <label>Invite Friends to the Bet</label>
+  </div>
   <div class="friend-list">
     <% friendRef.forEach(friend => { %>
       <div class="friend-card">
         <img class="profile-pic" src="/images/CHUGGRLogo.png" alt="">
         <label for="friend"><%=friend.data().firstName%> <%=friend.data().lastName%> (<%=friend.data().userName%>)</label>
-        <input type="checkbox" class="friend-select" value="<%=friend.data().uid%> <%=friend.data().firstName%>">
+        <input type="checkbox" class="friend-select" value="<%=friend.data().uid%> <%=friend.data().userName%>">
       </div>
 
     <%}); %>
   </div>
-  <button class="btn btn-primary" type="submit">Place Bet</button>
+  <button class="btn-lg btn-primary" type="submit">Place Bet</button>
 
   </form>
 
@@ -76,32 +78,34 @@
     <input type="date" class="form-control" name="dueDate" required>
   </div>
   <div class="form-group">
-    <label>🍺</label>
-    <input type="number" class="form-control" name="beers" max="4" required>
-    <label>🥃</label>
-    <input type="number" class="form-control" name="shots" max="4" required>
+    <label> Number of 🍺</label>
+    <input type="number" class="form-control" name="beers" max="4" value="1" placeholder="1" required>
+    <label>Number of 🥃</label>
+    <input type="number" class="form-control" name="shots" max="4" value="0" required>
   </div>
   <div class="form-group">
     <label>Choose a Side</label>
   </div>
   <div class="form-group">
     <label> For</label>
-    <input type="radio" name="team" id="eventSide1" value= <%=currentUser%> required>
+    <input type="radio" name="team" id="eventSide1" class="winner-select" value= <%=currentUser%> required>
     <label class="label-two"> Against</label>
-    <input type="radio" name="team" id="eventSide2" value= <%=currentUser%>>
+    <input type="radio" name="team" id="eventSide2" class="winner-select" value= <%=currentUser%>>
   </div>
-  <label>Invite Friends to the Bet</label>
+  <div class="form-group">
+    <label>Invite Friends to the Bet</label>
+  </div>
   <div class="friend-list">
     <% friendRef.forEach(friend => { %>
       <div class="friend-card">
         <img class="profile-pic" src="/images/CHUGGRLogo.png" alt="">
         <label for="friend"><%=friend.data().firstName%> <%=friend.data().lastName%> (<%=friend.data().userName%>)</label>
-        <input type="checkbox" class="friend-select" value="<%=friend.data().uid%> <%=friend.data().firstName%>">
+        <input type="checkbox" class="friend-select" value="<%=friend.data().uid%> <%=friend.data().userName%>">
       </div>
 
     <%}); %>
   </div>
-  <button class="btn btn-primary" type="submit">Place Bet</button>
+  <button class="btn-lg btn-primary" type="submit">Place Bet</button>
 
   </form>
 
@@ -122,33 +126,35 @@
     <input type="date" class="form-control" name="dueDate" required>
   </div>
   <div class="form-group">
-    <label>🍺</label>
-    <input type="number" class="form-control" name="beers" max="4" required>
-    <label>🥃</label>
-    <input type="number" class="form-control" name="shots" max="4" required>
+    <label>Number of 🍺</label>
+    <input type="number" class="form-control" name="beers" max="4" value="1" placeholder="1" required>
+    <label>Number of 🥃</label>
+    <input type="number" class="form-control" name="shots" max="4" value="0"  required>
   </div>
   <div class="form-group">
     <label>Choose a Side</label>
   </div>
   <div class="form-group">
     <label>Over</label>
-    <input type="radio" name="side" id= "over" value= <%= currentUser%> required>
+    <input type="radio" name="side" id= "over" class="winner-select" value= <%= currentUser%> required>
     <label class="label-two">Under</label>
-    <input type="radio" name="side" id="under" value= <%= currentUser %>>
+    <input type="radio" name="side" id="under" class="winner-select" value= <%= currentUser %>>
+  </div>
+  <div class="form-group">
+    <label>Invite Friends to the Bet</label>
   </div>
 
-  <label>Invite Friends to the Bet</label>
   <div class="friend-list">
     <% friendRef.forEach(friend => { %>
       <div class="friend-card">
         <img class="profile-pic" src="/images/CHUGGRLogo.png" alt="">
         <label for="friend"><%=friend.data().firstName%> <%=friend.data().lastName%> (<%=friend.data().userName%>)</label>
-        <input type="checkbox" class="friend-select" value="<%=friend.data().uid%> <%=friend.data().firstName%>">
+        <input type="checkbox" class="friend-select" value="<%=friend.data().uid%> <%=friend.data().userName%>">
       </div>
 
     <%}); %>
   </div>
-<button class="btn btn-primary bet-btn" type="submit">Place Bet</button>
+<button class="btn-lg btn-primary bet-btn" type="submit">Place Bet</button>
   </form>
 
 </div>

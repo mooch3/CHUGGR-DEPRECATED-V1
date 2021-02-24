@@ -3,9 +3,12 @@ const betID = document.getElementById('betID').value;
 const currentUser = document.getElementById('currentUser').value;
 const closeBetButton = document.getElementById('closeBetButton');
 const oustandingBetButton = document.getElementById('outstandingBetButton');
-const uninvitedUser = firestore.collection('testUsers').doc(currentUser);
+const uninvitedUser = firestore.collection('users').doc(currentUser);
 const joinBet = document.getElementById('joinBet');
-const betRef = firestore.collection('testBets').doc(betID);
+const betRef = firestore.collection('bets').doc(betID);
+const deleteBetBtn = document.getElementById('deleteBetBtn');
+
+
 
 if (joinBet != null){
   uninvitedUser.get().then((doc) => {
@@ -52,7 +55,16 @@ if (joinBet != null){
 
 
 betRef.get().then((doc) => {
+
+  if (deleteBetBtn != null){
+    deleteBetBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      deletebet(betRef, doc);
+    });
+  };
+  
   console.log(Object.keys(doc.data().side1Users).length);
+
   if (closeBetButton != null) {
     console.log(doc.data());
     closeBetButton.addEventListener('click', (e) => {
@@ -68,6 +80,7 @@ betRef.get().then((doc) => {
       console.log('User moved out of oustanding.');
     });
   };
+  
 });
 
 function closeBet(doc, side1, side2) {
@@ -119,7 +132,7 @@ function closeBet(doc, side1, side2) {
 };
 
 function incrementWinners(winner, beers, shots) {
-  firestore.collection('testUsers').doc(winner).update({
+  firestore.collection('users').doc(winner).update({
     "drinksGiven.beers": fieldValue.increment(beers),
     "drinksGiven.shots": fieldValue.increment(shots),
     betsWon: fieldValue.increment(1)
@@ -127,7 +140,7 @@ function incrementWinners(winner, beers, shots) {
 };
 
 function incrementLosers(loser, beers, shots) {
-  firestore.collection('testUsers').doc(loser).update({
+  firestore.collection('users').doc(loser).update({
     betsLost: fieldValue.increment(1),
     "drinksReceived.beers": fieldValue.increment(beers),
     "drinksReceived.shots": fieldValue.increment(shots),
@@ -193,7 +206,7 @@ function moveOutOfOutstanding() {
 function decrementOutstanding(doc) {
   const beers = doc.data().stake.beers;
   const shots = doc.data().stake.shots;
-  const userRef = firestore.collection('testUsers').doc(currentUser);
+  const userRef = firestore.collection('users').doc(currentUser);
   userRef.update({
     "drinksOutstanding.beers": fieldValue.increment(beers * -1),
     "drinksOutstanding.shots": fieldValue.increment(shots * -1)
@@ -217,3 +230,24 @@ function addToAllUsers(betRef){
     allUsers: fieldValue.arrayUnion(currentUser)
   })
 };
+
+function deletebet(betRef, doc){
+  const acceptedUsers = doc.data().acceptedUsers;
+  
+  acceptedUsers.forEach(user => {
+    decrementbets(user);  
+  });
+  betRef.delete().then(() => {
+    console.log('Bet deleted');
+
+    window.location = '/hub/dashboard';  
+  });
+};
+
+function decrementbets(user){
+  
+  firestore.collection('users').doc(user).update({
+    numBets: fieldValue.increment(-1)
+  })
+  console.log('bet decremented')
+}
