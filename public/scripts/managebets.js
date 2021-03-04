@@ -6,12 +6,13 @@ const formSpread = document.getElementById('spread-form');
 const formEvent = document.getElementById('sport-event-form')
 // reference current user
 const currentUser = document.getElementById('currentUser').value;
-const currentRef = firestore.collection('testUsers').doc(currentUser);
+const currentRef = firestore.collection('users').doc(currentUser);
 const fieldValue = firebase.firestore.FieldValue;
 
 // TODO add friends to bet
 
 function addFriendsToBet(selectedFriends) {
+  // Add friends to bet by Username
 
   const friendChecks = document.getElementsByClassName('friend-select');
 
@@ -43,7 +44,7 @@ formMoneyLine.addEventListener('submit', (e) => {
   e.preventDefault();
 
   const currentUser = document.getElementById('side1').value;
-  const betRef = firestore.collection('testBets').doc();
+  const betRef = firestore.collection('bets').doc();
   const side1 = document.getElementById('side1');
   const side2 = document.getElementById('side2');
   const selectedFriends = {};
@@ -53,7 +54,7 @@ formMoneyLine.addEventListener('submit', (e) => {
   addFriendsToBet(selectedFriends);
 
 
-  firestore.collection('testUsers').doc(currentUser).get().then(function(doc) {
+  firestore.collection('users').doc(currentUser).get().then(function(doc) {
     // Wait for promise from firestore to load documents and use that data to get user first name
     if (side1.checked) {
       // create bet object
@@ -128,7 +129,7 @@ formSpread.addEventListener('submit', (e) => {
   e.preventDefault();
 
   const currentUser = document.getElementById('under').value;
-  const betRef = firestore.collection('testBets').doc();
+  const betRef = firestore.collection('bets').doc();
   const over = document.getElementById('over');
   const under = document.getElementById('under');
   const selectedFriends = {};
@@ -138,7 +139,7 @@ formSpread.addEventListener('submit', (e) => {
   addFriendsToBet(selectedFriends);
 
   // Wait for promise from firestore to load documents and use that data to get user first name
-  firestore.collection('testUsers').doc(currentUser).get().then(function(doc) {
+  firestore.collection('users').doc(currentUser).get().then(function(doc) {
     if (over.checked) {
       // create bet object
       const bet = {
@@ -212,7 +213,7 @@ formEvent.addEventListener('submit', (e) => {
   e.preventDefault();
 
   const currentUser = document.getElementById('eventSide1').value;
-  const betRef = firestore.collection('testBets').doc();
+  const betRef = firestore.collection('bets').doc();
   const eventSide1 = document.getElementById('eventSide1');
   const eventSide2 = document.getElementById('eventSide2');
   const selectedFriends = {};
@@ -221,7 +222,7 @@ formEvent.addEventListener('submit', (e) => {
   allBetUsers(allUsersArr);
   addFriendsToBet(selectedFriends);
   // Wait for promise from firestore to load documents and use that data to get user first name
-  firestore.collection('testUsers').doc(currentUser).get().then(function(doc) {
+  firestore.collection('users').doc(currentUser).get().then(function(doc) {
     if (eventSide1.checked) {
       // create bet object
       const bet = {
@@ -351,12 +352,3 @@ function showSpread() {
 function incrementBetTotal() {
   currentRef.update({numBets: fieldValue.increment(1)})
 };
-
-firebase.auth().onAuthStateChanged(user => {
-  if (user){
-    console.log(user)
-  } else {
-    console.log('Not logged in.')
-  }
-
-});

@@ -2,11 +2,12 @@ const firestore = firebase.firestore();
 const renderChatBox = document.getElementById('renderChatBox')
   // retrieve latest messages from firestore and order by time stamp
 if(renderChatBox != null){
+
   // load messages when the page is called, then only listen for changes (not all documents)
   const currentUser = document.getElementById('currentUser').value;
-  const userRef = firestore.collection('testUsers').doc(currentUser)
+  const userRef = firestore.collection('users').doc(currentUser)
   const betID = document.getElementById('betID').value;
-  const chatRef = firestore.collection('testChatRooms').doc(betID);
+  const chatRef = firestore.collection('chatRooms').doc(betID);
   const send = document.getElementById('sendMessage');
   const inputRef = document.getElementById('chatValue')
 
@@ -17,7 +18,7 @@ if(renderChatBox != null){
       const chatbox = document.getElementById('chat-message-container')
       chatbox.scrollTop = chatbox.scrollHeight - chatbox.clientHeight;
     }
-  })
+  });
   send.addEventListener('click', (e) => {
     const input = document.getElementById('chatValue').value;
       userRef.get().then((doc) => {
@@ -44,17 +45,11 @@ if(renderChatBox != null){
 
   };
 
-  function createChat() {
-    chatRef.set({
-      betID: betID
-    });
-  };
-  // TODO: I just changed the app UI but I have not updated the javascript code for rendering
   getRealtimeChat = function() {
-    const orderChat = firestore.collection('testChatRooms')
-      .doc(betID)
-      .collection('actualMessages')
-      .orderBy('timestamp');
+    const orderChat = firestore.collection('chatRooms')
+                               .doc(betID)
+                               .collection('actualMessages')
+                               .orderBy('timestamp');
 
     orderChat.onSnapshot((snapshot) => {
 
@@ -95,7 +90,5 @@ if(renderChatBox != null){
 
   };
   // set listener
-
-  createChat();
   getRealtimeChat();
 }

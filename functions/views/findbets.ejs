@@ -1,0 +1,70 @@
+<%- include('partials/header'); -%>
+<div class="pending-bets" id="pendingBets">
+</div>
+<h1>Find Bets to Join</h1>
+<input type="hidden" id="currentUser" value=<%=currentUser%>>
+  <% docs.forEach(item => { %>
+    <%if (!item.data().allUsers.includes(currentUser)){%>
+    <%if (!item.data().isFinished && item.data().dueDate*1000 > Date.now()){%>
+      <div class="grid-container">
+        <div class="grid-item">
+          <%if (item.data().type === "spread") {%>
+            <strong><%=item.data().title%>: <%=item.data().line%></strong>
+            <%} else {%>
+            <strong><%=item.data().title%></strong>
+          <%}%>
+        </div>
+        <div class="grid-item">
+          <%=item.data().type.charAt(0).toUpperCase() + item.data().type.slice(1)%>
+        </div>
+        <div class="grid-item">
+          Stake: <%=item.data().stake.beers%>🍺
+            <%= item.data().stake.shots%>🥃
+        </div>
+        <div class="grid-item">
+          <%if (item.data().type === "event"){%>
+          For:
+          <%} else if (item.data().type === "spread"){%>
+          Over:
+          <%} else if (item.data().type === "moneyline") {%>
+          <%=item.data().team1%>: 
+          <%}%>
+          <i><%=Object.values(item.data().side1Users).join(', ')%></i>
+        </div>
+        <% const dueDate = new Date(item.data().dueDate*1000)%>
+          <div class="grid-item"></div>
+          <div class="grid-item">Due Date:
+            <%=(dueDate.getMonth()+1) + "/" + dueDate.getDate() + "/" + dueDate.getFullYear()%>
+          </div>
+          <div class="grid-item">
+            <%if (item.data().type === "event"){%>
+              Against:
+              <%} else if (item.data().type === "spread"){%>
+              Under:
+              <%} else if (item.data().type === "moneyline") {%>
+              <%=item.data().team2%>: 
+              <%}%>
+            <i><%=Object.values(item.data().side2Users).join(', ')%></i>
+          </div>
+        <% if(item.data().dueDate*1000 < Date.now() && item.data().isFinished == false){ %>
+          <div class="grid-item" style="color: red">Over Due</div>
+          <%} else if (item.data().isFinished == false){%>
+            <div class="grid-item" style="color:green">Pending</div>
+          <%} else if (item.data().isFinished == true && item.data().outstandingUsers.includes(currentUser)){%>
+            <div class="grid-item" style="color: #ff9933">You Owe Drinks</div>
+          <%} else if (item.data().isFinished == true && !item.data().outstandingUsers.includes(currentUser)){%>
+            <div class="grid-item" style="color: #005A9C">Closed</div>
+          <%};%>
+        <div class="grid-item">
+          <a href="/hub/bets/<%=item.data().betID%>" style="color: #983728">View Bet > </a>
+        </div>
+      </div>
+      <%};%>
+      <%};%>
+      <%});%>
+<script src="/scripts/firebasehelper.js"></script>
+<script src="/scripts/pendingBetsNotif.js"></script>
+<script src="/scripts/DashboardCleanUp.js"></script>
+
+
+<%-include('partials/footer'); -%>

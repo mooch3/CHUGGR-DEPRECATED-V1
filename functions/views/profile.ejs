@@ -1,0 +1,83 @@
+<%- include('partials/header'); -%>
+
+<% userProfile.forEach(doc => { %>
+  <div class="grid-container">
+    <div class="grid-item">
+      <img id="placeholder" src="/images/CHUGGRLogo.png" alt="">
+    </div>
+    <div class="grid-item">
+      <h1 style="color: #151E3F;"><%= doc.data().userName %></h1>
+    </div>
+    <div class="grid-item">
+      <h2 style="color: gray; font-size: 3rem"><%=doc.data().bio %></h2>
+    </div>
+    <div class="grid-item">
+      <h2 style="color: gray; font-size: 3rem"> <%= doc.data().firstName %> <%=doc.data().lastName%> </h2>
+    </div>
+    <div class="grid-item">
+      <strong><%=doc.data().drinksGiven.beers%> 🍺 <%=doc.data().drinksGiven.shots%> 🥃</strong> Given
+    </div>
+    <div class="grid-item">
+      <strong><%=doc.data().drinksReceived.beers%> 🍺 <%=doc.data().drinksReceived.shots%> 🥃</strong> Received
+    </div>
+    <div class="grid-item">
+      Following <strong><%=doc.data().numFriends%></strong> Friends
+    </div>
+    <div class="grid-item"></div>
+    <div class="grid-item">
+      <strong><%=doc.data().drinksOutstanding.beers%>🍺<%=doc.data().drinksOutstanding.shots%>🥃</strong> Outstanding
+      </div>
+    <div class="grid-item">
+      <strong><%=doc.data().numBets%></strong> Bets Made
+    </div>
+    <div class="grid-item"><strong><%=doc.data().betsWon%></strong> Bets Won</div>
+    <div class="grid-item"><strong><%=doc.data().betsLost%></strong> Bets Lost</div>
+   
+   
+    
+    
+    
+   
+    
+    
+
+  </div>
+
+<%});%>
+  <h1 class="pastbets-title">Past Bets</h1>
+<div class="pastbets-grid">
+  <% pastBets.forEach(bet => {%>
+    <div>
+    <% if (bet.data().isFinished === true) {%>
+      <%if (bet.data().type === "spread"){%>
+        <p>Spread</p>
+        <p><%=bet.data().line%></p>
+      <%} else if (bet.data().type === "event"){%>
+        <p>Event</p>
+        <br>
+        <br>
+      <%} else if (bet.data().type === "moneyline"){%>
+        <p>Money Line</p>
+        <br>
+        <br>
+      <%}%>
+      <% if (bet.data().title.length > 20){%>
+        <p><%=bet.data().title.substring(0, 20) + "..."%></p>
+      <%} else {%>
+        <p><%=bet.data().title%></p>
+      <%}%>
+      <p><%=bet.data().stake.beers%>🍺 <%=bet.data().stake.shots%>🥃</p>
+      <%if (bet.data().winner === "one" && bet.data().side1Users.hasOwnProperty(currentUser)){%>
+        <a href="/hub/bets/<%=bet.data().betID%>">Won</a>
+      <%} else if (bet.data().winner === "two" && bet.data().side2Users.hasOwnProperty(currentUser)){%>
+        <a href="/hub/bets/<%=bet.data().betID%>">Won</a>
+      <%} else {%>
+        <a href="/hub/bets/<%=bet.data().betID%>">Lost</a>
+      <%}%>
+      <%}%>
+      </div>
+    <%});%>
+</div>
+
+<script src="/scripts/firebasehelper.js"></script>
+<%- include('partials/footer'); -%>

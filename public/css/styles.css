@@ -1,7 +1,8 @@
 @font-face {
-  font-family: Tondu;
+  font-family: 'Tondu';
   src: url('Tondu_Beta.ttf');
 }
+
 body {
   font-family: 'Lato', sans-serif;
   color: #E0E2DB;
@@ -11,9 +12,9 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Sansita Swashed', cursive;
+  font-family: 'Tondu', cursive;
   color: #E0E2DB;
-  font-size: 4rem;
+  font-size: 6rem;
 }
 
 li {
@@ -188,7 +189,7 @@ input[type=submit] {
     border: 1px solid #8f3a2f;
   }
   .btn-lg {
-    width: 70px;
+    width: 120px;
     text-align: center;
     margin: 4% 0 0 1%
   }
@@ -197,7 +198,7 @@ input[type=submit] {
     background-color: #ff9933;
     overflow: hidden;
     color: #E0E2DB;
-    height: 75px;
+    height: 100px;
   }
 
 .hidden-div {
@@ -205,12 +206,13 @@ input[type=submit] {
 }
 
 #findFriends{
-  width: 100%
+  width: 100%;
+  border-radius: 10px;
 }
 
 #logo {
-  font-size: 5rem;
-  font-family: Tondu, sans-serif;
+  font-size: 6rem;
+  font-family: 'Tondu', sans-serif;
   position: absolute;
   left: 5%;
   top: -1%;
@@ -218,17 +220,16 @@ input[type=submit] {
 }
   /* Style the links inside the navigation bar */
   .topnav a {
-    display: inline-block;
     float: right;
     margin: 25px 16px;
     text-decoration: none;
-    font-size: 17px;
+    font-size: 2.5rem;
     font-family: inherit;
 
   }
 
   .topnav.active{
-      font-family: Tondu;
+      font-family: 'Tondu';
       font-size: 3rem;
       position: absolute;
       left: 3%;
@@ -248,7 +249,7 @@ input[type=submit] {
   .topnav .icon {
     display: none;
   }
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 1100px) {
   .topnav a:not(:first-child) {display: none;}
   .topnav a.icon {
     float: right;
@@ -256,10 +257,10 @@ input[type=submit] {
   }
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1100px) {
   .topnav.responsive {
     position: relative;
-    height: 450px;
+    height: 500px;
   }
   .topnav.responsive a.icon {
     position: absolute;
@@ -281,6 +282,11 @@ input[type=submit] {
 .form-control {
   width: 30%;
   margin: auto;
+}
+
+.form-group label {
+  font-size: 2rem;
+  padding: 0 20px;
 }
 
 .bet-choice {
@@ -338,6 +344,7 @@ input[type=submit] {
   background: #E0E2DB;
   height: 250px;
   color: #151E3F;
+  background-image: url("https://www.transparenttextures.com/patterns/blu-stripes.png");
 }
 .pastbets-grid p {
   font-size: 2rem
@@ -346,15 +353,15 @@ input[type=submit] {
 .pastbets-grid a {
   color: #151E3F;
   font-size: 3rem;
-  font-family: 'Sansita Swashed', cursive;
+  font-family: 'Tondu', cursive;
 }
 .pastbets-title {
   padding: 5rem 0 0 0;
 }
 
 #placeholder {
-  height: 120%;
-  width: 20%;
+  height: 100%;
+  width: 40%;
 }
 
 .profile-data {
@@ -413,9 +420,9 @@ ul {
 }
 
 .chatbox {
-  width: 370px;
+  width: 400px;
   height: 350px;
-  margin: 100px 60px 0 100px;
+  margin: 50px 60px 0 100px;
   position: relative;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, .2);
   display: flex;
@@ -539,7 +546,7 @@ ul {
   font-size: 12px;
   display: flex;
   align-items: center;
-  width: 320px;
+  width: 95%;
 }
 
 .message-box:after {
@@ -569,7 +576,7 @@ ul {
 }
 
 .chat-input-holder {
-  width: 360px;
+  width: 60%;
   position: relative;
   left: 100px;
   display: flex;
@@ -703,7 +710,7 @@ ul {
 .friend-list {
   width: 80%;
   display: block;
-  height: 150px;
+  height: 250px;
   border-radius: 6px;
   margin: auto;
   overflow: auto;
@@ -711,7 +718,7 @@ ul {
 .friend-card {
   width: 90%;
   display: inline-block;
-  height: 40px;
+  height: 60px;
   border-radius: 6px;
   font-size: 2rem;
   min-width: 70px;
@@ -729,7 +736,6 @@ input [type=checkbox] {
 }
 
 .friend-select {
- float: right;
  margin: 4px 4px 4px 30px;
  height: 25px;
  width: 25px;
@@ -746,17 +752,8 @@ input [type=checkbox] {
   color: #E0E2DB;
   font-size: 2rem;
   padding: 10px 0 10px 0;
-  font-family: 'Sansita Swashed', cursive;
+  font-family: 'Tondu', cursive;
   display: none;
-}
-.close-bet {
-  width: 30%;
-  display: inline-block;
-  position: absolute;
-  right: 10%;
-  bottom: -5%;
-  text-align: center;
-  height: 350px;
 }
 
 @media screen and (max-width: 921px){
@@ -768,7 +765,7 @@ input [type=checkbox] {
 }
 
 .group-chat {
-  width: 360px;
+  width: 60%;
 }
 
 .close-bet input {
@@ -806,6 +803,7 @@ width: 25px;
   background: #E0E2DB;
   height: 250px;
   color: #151E3F;
+  background-image: url("https://www.transparenttextures.com/patterns/blu-stripes.png");
 }
 
 .friends-grid-pic {
@@ -815,3 +813,40 @@ width: 25px;
 .friends-header {
   margin: 5rem 0 0 0;
 }
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background-color: #E0E2DB;
+  padding: 10px;
+  margin: 40px 60px;
+  border-radius: 15px;  
+}
+.grid-item {
+  background-color: #E0E2DB;
+  padding: 20px;
+  font-size: 30px;
+  text-align: left;
+  color: #151E3F;
+  background-image: url("https://www.transparenttextures.com/patterns/black-thread-light.png");
+}
+
+.bet-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding: 10px;
+  border-radius: 15px;
+  grid-auto-rows: auto auto auto
+}
+.bet-chat {
+grid-column: 1;
+grid-row: 1;
+}
+.bet-item {
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
+  grid-column: 2;
+}
+
+

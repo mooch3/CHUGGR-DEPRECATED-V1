@@ -1,0 +1,166 @@
+<%- include('partials/header') -%>
+
+<div class="bet">
+  <input type="hidden" id="currentUser" value=<%=currentUser%>>
+  <input type="hidden" id="betID" value=<%=betID%>>
+  <input type="hidden" id="beers" value=<%=bet.stake.beers%>>
+  <input type="hidden" id="shots" value="<%=bet.stake.shots%>">
+  <h1>Bet Details</h1>
+</div>
+<div class="grid-container">
+  <div class="grid-item">
+    <%if (bet.type === "spread") {%>
+      <strong><%=bet.title%>: <%=bet.line%></strong>
+      <%} else {%>
+      <strong><%=bet.title%></strong>
+    <%}%>
+  </div>
+  <div class="grid-item">
+    <%=bet.type.charAt(0).toUpperCase() + bet.type.slice(1)%>
+  </div>
+  <div class="grid-item">
+    Stake: <%=bet.stake.beers%>🍺
+      <%= bet.stake.shots%>🥃
+  </div>
+  <div class="grid-item">
+    <%if (bet.type === "event"){%>
+    For:
+    <%} else if (bet.type === "spread"){%>
+    Over:
+    <%} else if (bet.type === "moneyline") {%>
+    <%=bet.team1%>
+    <%}%>
+    <i><%=Object.values(bet.side1Users).join(', ')%></i>
+  </div>
+  <% const dueDate = new Date(bet.dueDate*1000)%>
+    <div class="grid-item"></div>
+    <div class="grid-item">Due Date:
+      <%=(dueDate.getMonth()+1) + "/" + dueDate.getDate() + "/" + dueDate.getFullYear()%>
+    </div>
+    <div class="grid-item">
+      <%if (bet.type === "event"){%>
+        Against:
+        <%} else if (bet.type === "spread"){%>
+        Under:
+        <%} else if (bet.type === "moneyline") {%>
+        <%=bet.team2%>
+        <%}%>
+      <i><%=Object.values(bet.side2Users).join(', ')%></i>
+    </div>
+    
+  <% if(bet.dueDate*1000 < Date.now() && bet.isFinished == false){ %>
+    <div class="grid-item" style="color: red">Over Due</div>
+    <%} else if (bet.isFinished == false){%>
+      <div class="grid-item" style="color:green">Pending</div>
+    <%} else if (bet.isFinished == true && bet.outstandingUsers.includes(currentUser)){%>
+      <div class="grid-item" style="color: #ff9933">You Owe Drinks</div>
+    <%} else if (bet.isFinished == true && !bet.outstandingUsers.includes(currentUser)){%>
+      <div class="grid-item" style="color: #005A9C">Closed</div>
+    <%};%>
+    <div class="grid-item">
+      <%if (bet.acceptedUsers.includes(currentUser) && bet.isFinished === false){%>
+      <a style= "color: #ff9933" href="javascript:void(0);"  id="deleteBetBtn">
+        <i class="fas fa-trash-alt"></i> 
+        Delete
+      </a>
+      <%};%>
+    </div>
+</div>
+<!-- Optional items -->
+<div class="bet-container">
+<% if(bet.allUsers.includes(currentUser)){%>
+  <% if(bet.isFinished == false){ %>
+  <div class="bet-item">
+  <div class="close-bet" id="closeBox">
+    <form id="closeItOut" method="post" action="/bets/<%=bet.betID%>">
+      <h1>Close the Bet</h1>
+      <p> Who won?</p>
+      <%if (bet.type === "event"){%>
+        <label id="side1Radio">For</label> 
+        <%} else if (bet.type === "spread"){%>
+          <label id="side1Radio">Over</label>
+        <%} else if (bet.type === "moneyline") {%>
+          <label id="side1Radio"><%=bet.team1%></label>
+        <%}%>    
+      <input type="radio" name="winner" id="side1UsersSelect" class="winner-select">
+      <%if (bet.type === "event"){%>
+        <label id="side2Radio">Against</label>
+        <%} else if (bet.type === "spread"){%>
+          <label id="side2Radio">Under</label>
+        <%} else if (bet.type === "moneyline") {%>
+          <label id="side2Radio"><%=bet.team2%></label>
+        <%}%>
+      <input type="radio" name="winner" id="side2UsersSelect" class="winner-select">
+      <br>
+    </form>
+    <button name="submit" class="btn-lg btn-primary" id="closeBetButton">Close Bet</button>
+  </div>
+</div>
+  <%} else if (bet.isFinished == true && bet.outstandingUsers.includes(currentUser)){%>
+  <div class="bet-item">
+    <div class="close-bet" id="closeBox">
+      <form id="outstandingDone" method="post" action="/bets/<%=bet.betID%>">
+        <h1>Did You Fulfill Your Bet?</h1>
+        <p> Do you promise?</p>
+        <label id="outstandingBtn">Yes, I promise.</label>
+        <input type="radio" name="outstanding" id="outstandingBtnSelect" class="winner-select">
+        <br>
+      </form>
+      <button name="submit" class="btn-lg btn-primary" id="outstandingBetButton">Tribute Was Paid</button>
+    </div>
+  </div>
+  <%};%>
+  <div class="bet-chat">
+  <div id="renderChatBox" class="chatbox group-chat">
+    <div class="chatbox-top">
+      <div class="chatbox-avatar">
+        <img src="/images/CHUGGRLogo.png" alt="">
+      </div>
+      <div class="chat-group-name">
+        <%=bet.title%>
+      </div>
+    </div>
+    <div class="chat-messages" id="chat-message-container">
+    </div>
+  </div>
+  <div class="chat-input-holder">
+    <input type="text" class="chat-input" id="chatValue" autocomplete="off"></input>
+    <input type="submit" value="Send" class="message-send" id="sendMessage" />
+  </div>
+</div>
+<%} else {%>
+<div class="bet-item">
+<div class="close-bet">
+  <form id="joinBet" method="post" action="/bets/<%=bet.betID%>">
+    <h1>Join This Bet</h1>
+    <p>Choose a Side</p>
+      <%if (bet.type === "event"){%>
+        <label id="side1Radio">For</label> 
+        <%} else if (bet.type === "spread"){%>
+          <label id="side1Radio">Over</label>
+        <%} else if (bet.type === "moneyline") {%>
+          <label id="side1Radio"><%=bet.team1%></label>
+        <%}%>    
+    <input type="radio" name="side" id="joinSideOne" class="winner-select">
+    
+      <%if (bet.type === "event"){%>
+        <label id="side2Radio">Against</label>
+        <%} else if (bet.type === "spread"){%>
+          <label id="side2Radio">Under</label>
+        <%} else if (bet.type === "moneyline") {%>
+          <label id="side2Radio"><%=bet.team2%></label>
+        <%}%>
+    <input type="radio" name="side" id="joinSideTwo" class="winner-select">
+    <br>
+  </form>
+  <button name="submit" class="btn-lg btn-primary" id="joinBetButton">Join Bet</button>
+</div>
+</div>
+<%}%>
+</div>
+
+<script src="/scripts/firebasehelper.js"></script>
+<script src="/scripts/chat.js"></script>
+<script src="/scripts/DashboardCleanUp.js"></script>
+<script src="/scripts/closebets.js"></script>
+<%- include('partials/footer') -%>
